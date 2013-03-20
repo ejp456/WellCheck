@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:controller="wellcheck.SampleController" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <Label fx:id="label"  alignment="CENTER" contentDisplay="CENTER" layoutX="149.0" layoutY="64.0" prefWidth="302.0" text="Well-Check Automation">
+      <font>
+        <Font name="Arial" size="28.0" />
+      </font>
+    </Label>
+    <TextField fx:id="username" layoutX="200.0" layoutY="200.0" prefWidth="200.0" promptText="Username" />
+    <PasswordField fx:id="password" layoutX="200.0" layoutY="222.0" prefWidth="200.0" promptText="Password" />
+    <Hyperlink layoutX="221.0" layoutY="273.0" text="Forgot Username/Password?" textFill="#0029ff" underline="true" />
+    <Button layoutX="241.0" layoutY="244.0" mnemonicParsing="false" prefWidth="118.0" text="Login" onAction="#handleSubmitButtonAction"/>
+  </children>
+</AnchorPane>

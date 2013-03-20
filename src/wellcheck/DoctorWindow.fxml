@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.DoctorWindowController">
+  <children>
+    <TabPane layoutX="14.0" layoutY="45.0" prefHeight="342.0" prefWidth="384.0" tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+        <Tab fx:id="patientstab" text="Patients">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TableView prefHeight="310.0" prefWidth="384.0">
+                  <columns>
+                    <TableColumn prefWidth="192.0" text="Patient" />
+                    <TableColumn prefWidth="192.0" text="Doctor" />
+                  </columns>
+                </TableView>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab fx:id="datatab" text="Data">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="286.0">
+              <children>
+                <TableView prefHeight="310.0" prefWidth="384.0">
+                  <columns>
+                    <TableColumn prefWidth="192.0" text="Patient" />
+                    <TableColumn prefWidth="192.0" text="Doctor" />
+                  </columns>
+                </TableView>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab fx:id="prescriptionstab" text="Prescriptions">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TableView prefHeight="310.0" prefWidth="384.0">
+                  <columns>
+                    <TableColumn prefWidth="192.0" text="Patient" />
+                    <TableColumn prefWidth="192.0" text="Doctor" />
+                  </columns>
+                </TableView>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+    <Label fx:id="loginlabel" layoutX="14.0" layoutY="15.0" prefWidth="286.0" />
+    <Button fx:id="editPatient" layoutX="410.0" layoutY="309.0" mnemonicParsing="false" prefWidth="183.0" text="Edit Patient Information" />
+    <Button fx:id="addDependant" layoutX="410.0" layoutY="338.0" mnemonicParsing="false" prefWidth="183.0" text="Add Dependant to Patient" />
+    <Button fx:id="removePatient" layoutX="410.0" layoutY="365.0" mnemonicParsing="false" prefWidth="183.0" text="Remove Patient" />
+    <Button fx:id="addPatient" layoutX="410.0" layoutY="280.0" mnemonicParsing="false" prefWidth="183.0" text="Add Patient" />
+    <Hyperlink id="logOut" layoutX="537.0" layoutY="9.0" text="Log Out" textFill="#1400ff" underline="true" onAction="#logOut" />
+  </children>
+</AnchorPane>
