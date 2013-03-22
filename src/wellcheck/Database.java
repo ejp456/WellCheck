@@ -31,9 +31,9 @@ public class Database {
         rs = null;
         statement = null;
         
-        url = "jdbc:mysql://localhost:3306/clinic";
-        user = "root";
-        password = "password";
+        url = "jdbc:mysql://205.178.146.105/1_0362c2e_3";
+        user = "1_0362c2e_3";
+        password = "3ggM4KkyFD";
 	}
 	public void Connect(){
         try {
@@ -51,7 +51,7 @@ public class Database {
 	}
 public boolean userExist(String string1){
 	try {
-		statement = (PreparedStatement) con.prepareStatement("SELECT user FROM testdb WHERE user =\""+string1+"\"");
+		statement = (PreparedStatement) con.prepareStatement("SELECT user FROM users WHERE user =\""+string1+"\"");
 		rs = statement.executeQuery();
 		while(rs.next()){
 			if(rs.getString(1).equals(string1)){
@@ -68,7 +68,7 @@ public boolean userExist(String string1){
 public boolean checkPassword(String user,String password){
     try {
     int count = 0;
-    statement = (PreparedStatement) con.prepareStatement("Select password FROM testdb WHERE user = \""+user+"\"");
+    statement = (PreparedStatement) con.prepareStatement("Select password FROM users WHERE user = \""+user+"\"");
     rs = statement.executeQuery();
     while(rs.next()){
     if(rs.getString(1).equals(password)){
