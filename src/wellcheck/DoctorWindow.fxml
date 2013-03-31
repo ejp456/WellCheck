@@ -5,6 +5,10 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?> 
+<?import javafx.collections.*?> 
+<?import wellcheck.*?>
+
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.DoctorWindowController">
   <children>
@@ -14,11 +18,22 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView prefHeight="310.0" prefWidth="384.0">
+                <TableView fx:id="patientTable" prefHeight="310.0" prefWidth="384.0">
                   <columns>
-                    <TableColumn prefWidth="192.0" text="Patient" />
-                    <TableColumn prefWidth="192.0" text="Doctor" />
+                     <TableColumn fx:id="patient" prefWidth="192.0" text="Patient">
+                        <cellValueFactory><PropertyValueFactory property="patient" />
+                            </cellValueFactory>
+                    </TableColumn>       
+                    <TableColumn fx:id="doctor" prefWidth="192.0" text="Doctor">
+                        <cellValueFactory><PropertyValueFactory property="doctor" />
+                            </cellValueFactory>
+                    </TableColumn>  
                   </columns>
+                  <items>
+                     <FXCollections fx:id ="patientList" fx:factory="observableArrayList">
+                         
+                     </FXCollections>
+                   </items>
                 </TableView>
               </children>
             </AnchorPane>
@@ -58,7 +73,7 @@
     <Button fx:id="editPatient" layoutX="410.0" layoutY="309.0" mnemonicParsing="false" prefWidth="183.0" text="Edit Patient Information" />
     <Button fx:id="addDependant" layoutX="410.0" layoutY="338.0" mnemonicParsing="false" prefWidth="183.0" text="Add Dependant to Patient" />
     <Button fx:id="removePatient" layoutX="410.0" layoutY="365.0" mnemonicParsing="false" prefWidth="183.0" text="Remove Patient" />
-    <Button fx:id="addPatient" layoutX="410.0" layoutY="280.0" mnemonicParsing="false" prefWidth="183.0" text="Add Patient" />
+    <Button fx:id="addPatient" layoutX="410.0" layoutY="280.0" mnemonicParsing="false" prefWidth="183.0" text="Add Patient" onAction="#handleSubmitButtonAction"/>
     <Hyperlink id="logOut" layoutX="537.0" layoutY="9.0" text="Log Out" textFill="#1400ff" underline="true" onAction="#logOut" />
   </children>
 </AnchorPane>

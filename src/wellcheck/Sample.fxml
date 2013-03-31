@@ -16,7 +16,7 @@
     </Label>
     <TextField fx:id="username" layoutX="200.0" layoutY="200.0" prefWidth="200.0" promptText="Username" />
     <PasswordField fx:id="password" layoutX="200.0" layoutY="222.0" prefWidth="200.0" promptText="Password" />
-    <Hyperlink layoutX="221.0" layoutY="273.0" text="Forgot Username/Password?" textFill="#0029ff" underline="true" />
+    <Hyperlink layoutX="221.0" layoutY="273.0" text="Forgot Username/Password?" textFill="#0029ff" underline="true" onAction ="#forgotButton"/>
     <Button layoutX="241.0" layoutY="244.0" mnemonicParsing="false" prefWidth="118.0" text="Login" onAction="#handleSubmitButtonAction"/>
   </children>
 </AnchorPane>

@@ -6,6 +6,7 @@ package wellcheck;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
@@ -15,20 +16,25 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 /**
  *
  * @author Etai
  */
 public class DoctorWindowController implements Initializable, ControlledScreen {
-    
-    
+    @FXML public static ObservableList<PatientTable> patientList;
+    @FXML private TableView patientTable;
+    @FXML private TableColumn patient, doctor;
     private Database db = new Database();
     ScreenController myController;
+    
 
     
     @FXML protected void handleSubmitButtonAction(ActionEvent event) {
-      
+      patientList.add(new PatientTable("guy","doctor"));
+      patientList.add(new PatientTable("girl", "doctor"));
         
     }
     @FXML protected void logOut(ActionEvent event){
@@ -41,5 +47,8 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     }    
     public void setScreenParent(ScreenController screenParent){
         myController = screenParent;
+    }
+    public static void addPatient(String p,String d){
+        patientList.add(new PatientTable(p,d));
     }
 }
