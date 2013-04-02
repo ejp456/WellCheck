@@ -92,11 +92,13 @@ public boolean patientTable(){
     while(rs.next()){
         patient.add(rs.getString(1)+" "+rs.getString(2));
         doctor.add(Integer.parseInt(rs.getString(3)));
+        
     }
+    int j = 0;
     for(int i=0;i<doctor.size();i++){
     statement = (PreparedStatement) con.prepareStatement("SELECT FirstName, LastName FROM users JOIN Patient ON (users.userid = Patient.Doctor) WHERE Patient.Doctor = \""+doctor.get(i)+"\"");
     rs = statement.executeQuery();
-    while(rs.next()){
+    if(rs.next()){
         DoctorWindowController.addPatient(patient.get(i), rs.getString(1)+" "+rs.getString(2));
         }
     }
@@ -185,4 +187,5 @@ public void closeConnection(){
 		        lgr.log(Level.WARNING, ex.getMessage(), ex);
 		    }
 	}
+
 }

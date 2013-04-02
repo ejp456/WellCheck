@@ -86,6 +86,7 @@ public class ForgotScreenController implements Initializable {
             enterLastName.setVisible(false);
             getUser.setVisible(false);
             }
+           
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -18,6 +18,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  *
@@ -40,6 +43,16 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     @FXML protected void logOut(ActionEvent event){
         myController.setScreen(WellCheck.screenID1);
     }
+    @FXML protected void editPatient(ActionEvent event) throws Exception{
+       //patientList.add(new PatientTable("girl", "doctor Koo"));
+       Parent root = FXMLLoader.load(getClass().getResource("EditPatientInformation.fxml"));
+       Stage stage = new Stage();
+       Scene scene = new Scene(root);
+       
+       stage.setScene(scene);
+       stage.show();
+    }
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
