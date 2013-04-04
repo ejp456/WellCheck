@@ -8,6 +8,7 @@ package wellcheck;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -20,6 +21,7 @@ public class Database {
     private Connection con;
     private Statement st;
     private ResultSet rs;
+    private ResultSetMetaData rsmd;
     private String url;
     private String user;
     private String password;
@@ -30,6 +32,7 @@ public class Database {
 	con = null;
         st = null;
         rs = null;
+        rsmd = null;
         statement = null;
         
         url = "jdbc:mysql://205.178.146.105/1_0362c2e_3";
@@ -226,6 +229,51 @@ public String getDoctorLast(String id){
         return null;
 	}
 }
+
+/*Kent's method
+ * This method queries using an arbitrary query the database and returns
+ * an ArrayList of List, with the container arraylist representing rows
+ * and the internal List representing columns.
+ * 
+ */
+public ArrayList dbQuery(String qstring){
+    try {
+        statement = (PreparedStatement) con.prepareStatement(qstring);
+        rs = statement.executeQuery();
+        rsmd = rs.getMetaData();
+
+        List<Object> objlist;
+        ArrayList<List> returnlist = new ArrayList();
+
+        while(rs.next()) {
+            objlist = new ArrayList();
+            for(int i = 1; i <= rsmd.getColumnCount(); i++) {
+                objlist.add(rs.getObject(i));
+            }
+            returnlist.add(objlist);
+        }
+        return returnlist;
+}   catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(Database.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+            return null;
+    }
+}
+
+/*Kent's Method
+ * This method modifies a database entry using an arbitrary string.
+ */
+public void updateDB(String qstring){
+    try {
+        statement = (PreparedStatement) con.prepareStatement(qstring);
+        statement.executeUpdate();            
+    }
+    catch (SQLException ex) {
+        Logger lgr = Logger.getLogger(Database.class.getName());
+        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+    }
+}
+
 public void closeConnection(){
     try {
         if (rs != null) {

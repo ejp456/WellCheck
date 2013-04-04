@@ -5,7 +5,9 @@
 package wellcheck;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,9 +30,10 @@ public class DependantWindowController implements Initializable {
     @FXML private ComboBox dependee;
     @FXML private ComboBox depender;
     @FXML private Label confirmtext;
-    @FXML private String confirmstring = "Are you sure you want to add %s %s as"
+    private String confirmstring = "Are you sure you want to add %s %s as"
             + "a dependant to Patient 2? Patient 1 will be able to view all of "
-            + "%s %s's records.";
+            + "%s %s's records.";    
+    private Database db;
     
     @FXML protected void close(ActionEvent event) throws Exception{
         Node  source = (Node)  event.getSource(); 
@@ -40,6 +43,20 @@ public class DependantWindowController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        db = new Database();
+        db.Connect();
+
+        ArrayList plist = db.dbQuery("Select FirstName, LastName FROM users WHERE usertype = 'Patient'");
+        ArrayList<String> patientname = new ArrayList(plist.size());
+    
+        for(int i = 0; i < plist.size(); i++){
+            patientname.add((String) ((ArrayList) plist.get(i)).get(0) + " " + (String) ((ArrayList) plist.get(i)).get(1));
+        }
+        
+        ObservableList<String> olist = FXCollections.observableList(patientname);;
+        dependee.getItems().addAll(olist);
+        depender.getItems().addAll(olist);
+      
+        db.closeConnection();
     }  
 }
