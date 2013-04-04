@@ -75,6 +75,14 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         
         
     }
+    @FXML protected void addDependant(ActionEvent event) throws Exception{
+       Parent root = FXMLLoader.load(getClass().getResource("DependantWindow.fxml"));
+       Stage stage = new Stage();
+       Scene scene = new Scene(root);
+       
+       stage.setScene(scene);
+       stage.show();
+    }
 
     
     @Override
