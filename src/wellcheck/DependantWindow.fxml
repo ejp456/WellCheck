@@ -24,24 +24,18 @@
               </labelFor>
             </Label>
             <Button fx:id="confirm2" layoutX="14.0" layoutY="123.0" mnemonicParsing="false" text="Confirm" />
-            <Button fx:id="cancel2" layoutX="130.0" layoutY="123.0" mnemonicParsing="false" onAction="#close" text="Cancel" />
+            <Button fx:id="cancel2" layoutX="130.0" layoutY="123.0" mnemonicParsing="false" text="Cancel" onAction="#close" />
           </children>
         </AnchorPane>
         <ComboBox fx:id="dependee" layoutX="14.0" layoutY="39.0" prefHeight="21.0" prefWidth="172.0" promptText="Select Patient">
           <items>
             <FXCollections fx:factory="observableArrayList">
-              <String fx:value="Item 1" />
-              <String fx:value="Item 2" />
-              <String fx:value="Item 3" />
             </FXCollections>
           </items>
         </ComboBox>
         <ComboBox fx:id="depender" layoutX="14.0" layoutY="90.0" prefHeight="21.0" prefWidth="172.0" promptText="Select Patient">
           <items>
             <FXCollections fx:factory="observableArrayList">
-              <String fx:value="Item 1" />
-              <String fx:value="Item 2" />
-              <String fx:value="Item 3" />
             </FXCollections>
           </items>
         </ComboBox>
