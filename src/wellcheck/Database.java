@@ -13,7 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.sql.PreparedStatement;
+//import java.sql.PreparedStatement; Everything seems to work using this statement
+import com.mysql.jdbc.PreparedStatement;
 import java.util.*;
 
 
