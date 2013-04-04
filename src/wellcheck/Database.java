@@ -112,7 +112,7 @@ public boolean patientTable(){
 public String getSecretQuestion(String fName, String lName){
      try {
     int count = 0;
-    statement = (PreparedStatement) con.prepareStatement("Select SecretQuestion FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
+    statement = (PreparedStatement) con.prepareStatement("SELECT SecretQuestion FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
     rs = statement.executeQuery();
     while(rs.next()){
     return rs.getString(1);
@@ -127,7 +127,7 @@ public String getSecretQuestion(String fName, String lName){
 public String getSecretAnswer(String fName, String lName){
      try {
     int count = 0;
-    statement = (PreparedStatement) con.prepareStatement("Select SecretAnswer FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
+    statement = (PreparedStatement) con.prepareStatement("SELECT SecretAnswer FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
     rs = statement.executeQuery();
     while(rs.next()){
     return rs.getString(1);
@@ -142,7 +142,7 @@ public String getSecretAnswer(String fName, String lName){
 public String getPassword(String fName, String lName){
      try {
     int count = 0;
-    statement = (PreparedStatement) con.prepareStatement("Select Password FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
+    statement = (PreparedStatement) con.prepareStatement("SELECT Password FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
     rs = statement.executeQuery();
     while(rs.next()){
     return rs.getString(1);
@@ -154,10 +154,29 @@ public String getPassword(String fName, String lName){
         return null;
 	}
 }
+public boolean deleteUser(String fName, String lName){
+     try {
+    String userid="";
+    statement = (PreparedStatement) con.prepareStatement("Select userid FROM users WHERE FirstName = \""+fName+"\"AND LastName=\""+lName+"\"");
+    rs = statement.executeQuery();
+    while(rs.next()){
+    userid = rs.getString(1);
+        }
+    statement = (PreparedStatement) con.prepareStatement("DELETE FROM users WHERE userid ="+userid+"");
+    statement.execute();
+    statement = (PreparedStatement) con.prepareStatement("DELETE FROM Patient WHERE userid ="+userid+"");
+    statement.execute();
+    return true;
+    } catch (SQLException ex) {
+		Logger lgr = Logger.getLogger(Database.class.getName());
+        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        return false;
+	}
+}
 public String getUserName(String fName, String lName){
      try {
     int count = 0;
-    statement = (PreparedStatement) con.prepareStatement("Select username FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
+    statement = (PreparedStatement) con.prepareStatement("SELECT username FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
     rs = statement.executeQuery();
     while(rs.next()){
         System.out.println(rs.getString(1));
@@ -197,7 +216,7 @@ public void initializePatient(String firstName, String lastName, String dateOfBi
 public String getDoctorFirst(String id){
      try {
     int count = 0;
-    statement = (PreparedStatement) con.prepareStatement("Select FirstName FROM users WHERE userid = \""+id+"\"");
+    statement = (PreparedStatement) con.prepareStatement("SELECT FirstName FROM users WHERE userid = \""+id+"\"");
     rs = statement.executeQuery();
     while(rs.next()){
         System.out.println(rs.getString(1));
@@ -213,7 +232,7 @@ public String getDoctorFirst(String id){
 public String getDoctorLast(String id){
      try {
     int count = 0;
-    statement = (PreparedStatement) con.prepareStatement("Select LastName FROM users WHERE userid = \""+id+"\"");
+    statement = (PreparedStatement) con.prepareStatement("SELECT LastName FROM users WHERE userid = \""+id+"\"");
     rs = statement.executeQuery();
     while(rs.next()){
         System.out.println(rs.getString(1));

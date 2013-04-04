@@ -56,6 +56,25 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
        stage.setScene(scene);
        stage.show();
     }
+    @FXML protected void newEntry(ActionEvent event)throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("addNewEntry.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+       
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML protected void removePatient(ActionEvent event){
+        db.Connect();
+        PatientTable patient =(PatientTable) patientTable.getSelectionModel().getSelectedItem();
+        String name[] = patient.getPatient().split(" ");
+        if(name.length>=2){
+            patientList.remove(patient);
+            db.deleteUser(name[0], name[1]);
+        }
+        
+        
+    }
 
     
     @Override

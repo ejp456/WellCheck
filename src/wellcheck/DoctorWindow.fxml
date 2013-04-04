@@ -2,11 +2,11 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
-<?import javafx.scene.*?> 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.cell.*?> 
-<?import javafx.collections.*?> 
+<?import javafx.scene.control.cell.*?>
+<?import javafx.collections.*?>
 <?import wellcheck.*?>
 
 
@@ -23,11 +23,11 @@
                      <TableColumn fx:id="patient" prefWidth="192.0" text="Patient">
                         <cellValueFactory><PropertyValueFactory property="patient" />
                             </cellValueFactory>
-                    </TableColumn>       
+                    </TableColumn>
                     <TableColumn fx:id="doctor" prefWidth="192.0" text="Doctor">
                         <cellValueFactory><PropertyValueFactory property="doctor" />
                             </cellValueFactory>
-                    </TableColumn>  
+                    </TableColumn>
                   </columns>
                   <items>
                      <FXCollections fx:id ="patientList" fx:factory="observableArrayList">
@@ -69,11 +69,11 @@
         </Tab>
       </tabs>
     </TabPane>
-    <Label fx:id="loginlabel" layoutX="14.0" layoutY="15.0" prefWidth="286.0" />
-    <Button fx:id="editPatient" layoutX="410.0" layoutY="309.0" mnemonicParsing="false" prefWidth="183.0" text="Edit Patient Information" onAction="#editPatient"/>
+    <Button fx:id="editPatient" layoutX="410.0" layoutY="309.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="183.0" text="Edit Patient Information" />
     <Button fx:id="addDependant" layoutX="410.0" layoutY="338.0" mnemonicParsing="false" prefWidth="183.0" text="Add Dependant to Patient" />
-    <Button fx:id="removePatient" layoutX="410.0" layoutY="365.0" mnemonicParsing="false" prefWidth="183.0" text="Remove Patient" />
-    <Button fx:id="addPatient" layoutX="410.0" layoutY="280.0" mnemonicParsing="false" prefWidth="183.0" text="Add Patient" onAction="#addPatientButton"/>
-    <Hyperlink id="logOut" layoutX="537.0" layoutY="9.0" text="Log Out" textFill="#1400ff" underline="true" onAction="#logOut" />
+    <Button fx:id="removePatient" layoutX="410.0" layoutY="365.0" mnemonicParsing="false" prefWidth="183.0" text="Remove Patient" onAction="#removePatient"/>
+    <Button fx:id="addPatient" layoutX="410.0" layoutY="250.0" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="183.0" text="Add Patient" />
+    <Hyperlink id="logOut" layoutX="537.0" layoutY="9.0" onAction="#logOut" text="Log Out" textFill="#1400ff" underline="true" />
+    <Button id="editPatient" fx:id="editEntry" layoutX="410.0" layoutY="280.0" mnemonicParsing="false" onAction="#newEntry" prefWidth="183.0" text="Add/Edit Entry" />
   </children>
 </AnchorPane>

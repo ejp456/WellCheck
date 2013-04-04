@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="373.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <TextField id="comments" layoutX="55.0" layoutY="278.0" prefHeight="68.0" prefWidth="262.0" promptText="BP high today" />
+    <Text layoutX="59.0" layoutY="255.0" scaleX="1.029978704511343" scaleY="1.259774510932849" strokeType="OUTSIDE" strokeWidth="0.0" text="Comments" />
+    <ChoiceBox id="date_day" layoutX="53.0" layoutY="190.0" minHeight="16.51025390625" prefHeight="24.0" prefWidth="79.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="1" />
+          <String fx:value="2" />
+          <String fx:value="3" />
+          <String fx:value="4" />
+          <String fx:value="5" />
+          <String fx:value="6" />
+          <String fx:value="7" />
+          <String fx:value="8" />
+          <String fx:value="9" />
+          <String fx:value="10" />
+          <String fx:value="11" />
+          <String fx:value="12" />
+        </FXCollections>
+      </items>
+    </ChoiceBox>
+    <ChoiceBox id="date_month" layoutX="147.0" layoutY="190.0" minHeight="17.0" prefHeight="24.0" prefWidth="79.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="1" />
+          <String fx:value="2" />
+          <String fx:value="3" />
+          <String fx:value="4" />
+          <String fx:value="5" />
+          <String fx:value="6" />
+          <String fx:value="7" />
+          <String fx:value="8" />
+          <String fx:value="9" />
+          <String fx:value="10" />
+          <String fx:value="11" />
+          <String fx:value="12" />
+          <String fx:value="13" />
+          <String fx:value="14" />
+          <String fx:value="15" />
+          <String fx:value="16" />
+          <String fx:value="17" />
+          <String fx:value="18" />
+          <String fx:value="19" />
+          <String fx:value="20" />
+          <String fx:value="21" />
+          <String fx:value="22" />
+          <String fx:value="23" />
+          <String fx:value="24" />
+          <String fx:value="25" />
+          <String fx:value="26" />
+          <String fx:value="27" />
+          <String fx:value="28" />
+          <String fx:value="29" />
+          <String fx:value="30" />
+          <String fx:value="31" />
+        </FXCollections>
+      </items>
+    </ChoiceBox>
+    <ChoiceBox id="date_year" layoutX="238.0" layoutY="190.0" minHeight="17.0" prefHeight="24.0" prefWidth="79.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="2008" />
+          <String fx:value="2009" />
+          <String fx:value="2010" />
+          <String fx:value="2011" />
+          <String fx:value="2012" />
+          <String fx:value="2013" />
+          <String fx:value="2014" />
+        </FXCollections>
+      </items>
+    </ChoiceBox>
+    <Text layoutX="93.0" layoutY="60.0" scaleX="1.18517882601649" scaleY="1.2816979811425508" strokeType="OUTSIDE" strokeWidth="0.0" text="Blood Pressure" />
+    <Text layoutX="91.0" layoutY="94.0" scaleX="1.2649209038863063" scaleY="1.256283292312096" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight" />
+    <Text layoutX="90.0" layoutY="129.0" scaleX="1.119839921571256" scaleY="1.234453397699344" strokeType="OUTSIDE" strokeWidth="0.0" text="Sugar" />
+    <TextField layoutX="238.0" layoutY="41.0" prefWidth="52.0" promptText="30/40" />
+    <TextField layoutX="237.0" layoutY="75.0" prefWidth="52.000099999997474" promptText="150" />
+    <TextField layoutX="238.0" layoutY="110.0" prefHeight="21.722503662109375" prefWidth="53.0" promptText="133" />
+    <Button id="add" layoutX="54.0" layoutY="363.0" mnemonicParsing="false" prefWidth="64.0" text="add" />
+    <Button id="cancel" layoutX="257.0" layoutY="363.0" mnemonicParsing="false" text="Cancel" />
+    <Text layoutX="63.0" layoutY="183.0" scaleX="1.3695815732700012" scaleY="1.231334011069694" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
+  </children>
+</AnchorPane>

@@ -108,6 +108,8 @@ public class EditPatientInformationWindows implements Initializable {
         getmemberID.clear();
         getgroupNumber.clear();
         getassignedDoctor.clear();
+        Stage stage = (Stage) cancel.getScene().getWindow();
+        stage.close();
     }
     
     

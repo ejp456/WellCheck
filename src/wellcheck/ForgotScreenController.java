@@ -35,6 +35,7 @@ public class ForgotScreenController implements Initializable {
     String username;
     String lName;
     String fName;
+    String secret;
     Database db = new Database();
     
     
@@ -42,16 +43,19 @@ public class ForgotScreenController implements Initializable {
     @FXML protected void forgotPassword(ActionEvent e){
     if(getPass.getText().equalsIgnoreCase("Answer")){
         if(secretAnswer.equalsIgnoreCase(enterFirstName.getText())){
-            secretQuestion.setText(password);
+            secretQuestion.setText("Password: "+password);
             secretQuestion.setTextFill(Color.RED);
             enterFirstName.setVisible(false);
             getPass.setVisible(false);
+        }else{
+            secretQuestion.setText("Wrong Answer");
+            secretQuestion.setTextFill(Color.RED);
         }
     }else{
     db.Connect();
-    String lName = enterLastName.getText();
-    String fName = enterFirstName.getText();
-    String secret = db.getSecretQuestion(fName, lName);
+    lName = enterLastName.getText();
+    fName = enterFirstName.getText();
+    secret = db.getSecretQuestion(fName, lName);
     System.out.println();
     secretAnswer = db.getSecretAnswer(fName, lName);
     password = db.getPassword(fName, lName);
@@ -71,21 +75,35 @@ public class ForgotScreenController implements Initializable {
     
     }
     @FXML protected void forgotUserName(ActionEvent e){
+           if(getUser.getText().equalsIgnoreCase("Answer")){
+               if(enterLastName.getText().equalsIgnoreCase(secretAnswer)){
+                   secretQuestion.setText("Username: "+username);
+                   secretQuestion.setTextFill(Color.RED);
+                   enterLastName.setVisible(false);
+                   getUser.setVisible(false);
+               }else{
+                   secretQuestion.setText("Wrong Answer");
+                   secretQuestion.setTextFill(Color.RED);
+               }
+           }else{
+           db.Connect();
            lName = enterLastName.getText();
            fName = enterFirstName.getText();
+           secret = db.getSecretQuestion(fName, lName);
+           secretAnswer = db.getSecretAnswer(fName, lName);
            username = db.getUserName(fName, lName);
-           System.out.println(username);
            if(username == null){
             secretQuestion.setText("Name doesn't exist.");
             secretQuestion.setTextFill(Color.RED);
             }else{
-            secretQuestion.setText(username);
-            secretQuestion.setTextFill(Color.RED);
-            getPass.setVisible(false);
+            secretQuestion.setText(secret);
+            getUser.setText("Answer");
+            enterLastName.clear();
+            enterLastName.setPromptText("");
             enterFirstName.setVisible(false);
-            enterLastName.setVisible(false);
-            getUser.setVisible(false);
+            getPass.setVisible(false);
             }
+           }
            
     }
     @Override
