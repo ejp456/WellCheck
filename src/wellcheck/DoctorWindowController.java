@@ -35,12 +35,16 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     
 
     
-    @FXML protected void handleSubmitButtonAction(ActionEvent event) {
-      patientList.add(new PatientTable("guy","doctor"));
-      patientList.add(new PatientTable("girl", "doctor"));
-        
+    @FXML protected void addPatientButton(ActionEvent event) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("AddPatientWindow.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+       
+        stage.setScene(scene);
+        stage.show();
     }
     @FXML protected void logOut(ActionEvent event){
+        patientList.clear();
         myController.setScreen(WellCheck.screenID1);
     }
     @FXML protected void editPatient(ActionEvent event) throws Exception{
