@@ -5,7 +5,9 @@
 package wellcheck;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
 /**
@@ -28,8 +31,11 @@ import javafx.stage.Stage;
  */
 public class DoctorWindowController implements Initializable, ControlledScreen {
     @FXML public static ObservableList<PatientTable> patientList;
+    @FXML public static ObservableList<String> comboList;
+    @FXML private ObservableList<dataTable> dataList;
     @FXML private TableView patientTable;
     @FXML private TableColumn patient, doctor;
+    @FXML private ComboBox patientDropDown;
     private Database db = new Database();
     ScreenController myController;
     
@@ -70,6 +76,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         String name[] = patient.getPatient().split(" ");
         if(name.length>=2){
             patientList.remove(patient);
+            comboList.remove(name[0]+" "+name[1]);
             db.deleteUser(name[0], name[1]);
         }
         
@@ -83,11 +90,34 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
        stage.setScene(scene);
        stage.show();
     }
-
-    
+    @FXML protected void dataComboBox(ActionEvent event){
+       db.Connect();
+       dataList.clear();
+       String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
+       String delims = "[ ]";
+       String[] tokens = name.split(delims);
+       ArrayList<dataTable> data = db.dataTable(tokens[0], tokens[1]);
+       dataList.addAll(data);
+       db.closeConnection();
+    }  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       db = new Database();
+        db.Connect();
+        patientDropDown.getItems().clear();
+        
+        ArrayList plist = db.dbQuery("SELECT FirstName, LastName, Patient.Doctor FROM users JOIN Patient ON (users.userid = Patient.userid)");
+        ArrayList<String> patientname = new ArrayList(plist.size());
+    
+        for(int i = 0; i < plist.size(); i++){
+            patientname.add((String) ((ArrayList) plist.get(i)).get(0) + " " + (String) ((ArrayList) plist.get(i)).get(1));
+        }
+        
+        ObservableList<String> olist = FXCollections.observableList(patientname);
+        patientDropDown.getItems().addAll(olist);
+      
+
+        
     }    
     public void setScreenParent(ScreenController screenParent){
         myController = screenParent;

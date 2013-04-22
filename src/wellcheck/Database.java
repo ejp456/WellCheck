@@ -88,7 +88,7 @@ public boolean checkPassword(String user,String password){
 	}
 }
 public boolean patientTable(){
-        try {
+    try {
     ArrayList<String> patient = new ArrayList();
     ArrayList<Integer> doctor = new ArrayList();
     statement = (PreparedStatement) con.prepareStatement("SELECT FirstName, LastName, Patient.Doctor FROM users JOIN Patient ON (users.userid = Patient.userid)");
@@ -111,6 +111,28 @@ public boolean patientTable(){
 		Logger lgr = Logger.getLogger(Database.class.getName());
         lgr.log(Level.SEVERE, ex.getMessage(), ex);
         return false;
+	}
+}
+public ArrayList<dataTable> dataTable(String fName,String lName){
+    try {
+    ArrayList<dataTable> data = new ArrayList();
+    int count = 0;
+    String id="";
+    statement = (PreparedStatement) con.prepareStatement("SELECT userid FROM users Where FirstName= \""+fName+"\" AND LastName=\""+lName+"\"");
+    rs = statement.executeQuery();
+    while(rs.next()){
+    id = rs.getString(1);
+    }
+    statement = (PreparedStatement) con.prepareStatement("SELECT BloodPressure, SugarLevel,Weight,Date,Comments FROM Records Where PatientId=\""+id+"\"");
+    rs = statement.executeQuery();
+    while(rs.next()){
+    data.add(new dataTable(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+    }
+        return data;
+    } catch (SQLException ex) {
+		Logger lgr = Logger.getLogger(Database.class.getName());
+        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        return null;
 	}
 }
 public String getSecretQuestion(String fName, String lName){
@@ -170,6 +192,8 @@ public boolean deleteUser(String fName, String lName){
     statement.execute();
     statement = (PreparedStatement) con.prepareStatement("DELETE FROM Patient WHERE userid ="+userid+"");
     statement.execute();
+    statement = (PreparedStatement) con.prepareStatement("DELETE FROM Records WHERE PatientId ="+userid+"");
+    statement.executeQuery();
     return true;
     } catch (SQLException ex) {
 		Logger lgr = Logger.getLogger(Database.class.getName());

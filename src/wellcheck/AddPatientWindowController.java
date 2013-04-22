@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import static wellcheck.DoctorWindowController.patientList;
+import static wellcheck.DoctorWindowController.comboList;
 import javafx.stage.Stage;
 
 /**
@@ -81,7 +82,7 @@ public class AddPatientWindowController implements Initializable {
                 phoneNumber, insuranceProvider, memberId, groupNumber, assignedDoctor, userId);
         
         patientList.add(new PatientTable(firstName + " " + lastName, db.getDoctorFirst(assignedDoctor) + " " + db.getDoctorLast(assignedDoctor)));
-        
+        comboList.add(firstName+" "+lastName);
         Stage stage = (Stage) cancel.getScene().getWindow();
         stage.close();
     }
