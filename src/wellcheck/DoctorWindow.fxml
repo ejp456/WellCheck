@@ -11,21 +11,23 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.DoctorWindowController">
   <children>
-    <TabPane layoutX="14.0" layoutY="45.0" prefHeight="342.0" prefWidth="384.0" tabClosingPolicy="UNAVAILABLE">
+    <TabPane layoutY="45.0" prefHeight="355.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab fx:id="patientstab" text="Patients">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView fx:id="patientTable" prefHeight="310.0" prefWidth="384.0">
+                <TableView fx:id="patientTable" prefHeight="319.0" prefWidth="384.0">
                   <columns>
-                     <TableColumn fx:id="patient" prefWidth="192.0" text="Patient">
-                        <cellValueFactory><PropertyValueFactory property="patient" />
-                            </cellValueFactory>
+                    <TableColumn prefWidth="192.0" text="Patient" fx:id="patient">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="patient" />
+                      </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="doctor" prefWidth="192.0" text="Doctor">
-                        <cellValueFactory><PropertyValueFactory property="doctor" />
-                            </cellValueFactory>
+                    <TableColumn prefWidth="192.0" text="Doctor" fx:id="doctor">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="doctor" />
+                      </cellValueFactory>
                     </TableColumn>
                   </columns>
                   <items>
@@ -34,6 +36,11 @@
                      </FXCollections>
                    </items>
                 </TableView>
+                <Button fx:id="removePatient" layoutX="417.0" layoutY="284.0" mnemonicParsing="false" onAction="#removePatient" prefWidth="183.0" text="Remove Patient" />
+                <Button fx:id="addDependant" layoutX="417.0" layoutY="254.0" mnemonicParsing="false" onAction="#addDependant" prefWidth="183.0" text="Add Dependant to Patient" />
+                <Button id="editPatient" fx:id="editEntry" layoutX="417.0" layoutY="223.0" mnemonicParsing="false" onAction="#newEntry" prefWidth="183.0" text="Add/Edit Entry" />
+                <Button fx:id="editPatient" layoutX="417.0" layoutY="193.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="183.0" text="Edit Patient Information" />
+                <Button fx:id="addPatient" layoutX="417.0" layoutY="160.0" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="183.0" text="Add Patient" />
               </children>
             </AnchorPane>
           </content>
@@ -42,28 +49,33 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="286.0">
               <children>
-                <TableView layoutY="26.0" prefHeight="279.0" prefWidth="384.0">
+                <TableView layoutY="26.0" prefHeight="293.0" prefWidth="600.0">
                   <columns>
-                    <TableColumn prefWidth="50.0" text="BP" >
-                        <cellValueFactory><PropertyValueFactory property="Blood" />
-                            </cellValueFactory>
-                        </TableColumn>
-                    <TableColumn prefWidth="50.0" text="Weight" >
-                    <cellValueFactory><PropertyValueFactory property="weight" />
-                            </cellValueFactory>
-                        </TableColumn>
-                    <TableColumn prefWidth="50.0" text="Sugar" >
-                    <cellValueFactory><PropertyValueFactory property="sugar" />
-                            </cellValueFactory>
-                        </TableColumn>
-                    <TableColumn prefWidth="75.0" text="Date" >
-                        <cellValueFactory><PropertyValueFactory property="date" />
-                            </cellValueFactory>
-                        </TableColumn>
-                    <TableColumn prefWidth="160.0" text="Comments">
-                    <cellValueFactory><PropertyValueFactory property="comments" />
-                            </cellValueFactory>
-                        </TableColumn>
+                    <TableColumn prefWidth="75.0" text="BP">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="Blood" />
+                      </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="75.0" text="Weight">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="weight" />
+                      </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="75.0" text="Sugar">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="sugar" />
+                      </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="105.0" text="Date">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="date" />
+                      </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="275.0" text="Comments">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="comments" />
+                      </cellValueFactory>
+                    </TableColumn>
                   </columns>
                   <items>
                      <FXCollections fx:id ="dataList" fx:factory="observableArrayList">
@@ -71,12 +83,12 @@
                      </FXCollections>
                    </items>
                 </TableView>
-                <ComboBox layoutY="3.0" prefWidth="143.0" fx:id="patientDropDown" onAction="#dataComboBox" >
-                  <items>
+                <ComboBox fx:id="patientDropDown" layoutY="3.0" onAction="#dataComboBox" prefWidth="143.0">
+                    <items>
                     <FXCollections fx:id="comboList" fx:factory="observableArrayList">
                     </FXCollections>
                   </items>
-                </ComboBox>
+            </ComboBox>
               </children>
             </AnchorPane>
           </content>
@@ -85,7 +97,7 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView prefHeight="310.0" prefWidth="384.0">
+                <TableView prefHeight="319.0" prefWidth="384.0">
                   <columns>
                     <TableColumn prefWidth="192.0" text="Patient" />
                     <TableColumn prefWidth="192.0" text="Doctor" />
@@ -97,11 +109,6 @@
         </Tab>
       </tabs>
     </TabPane>
-    <Button fx:id="editPatient" layoutX="410.0" layoutY="309.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="183.0" text="Edit Patient Information" />
-    <Button fx:id="addDependant" layoutX="410.0" layoutY="338.0" mnemonicParsing="false" onAction="#addDependant" prefWidth="183.0" text="Add Dependant to Patient" />
-    <Button fx:id="removePatient" layoutX="410.0" layoutY="365.0" mnemonicParsing="false" onAction="#removePatient" prefWidth="183.0" text="Remove Patient" />
-    <Button fx:id="addPatient" layoutX="410.0" layoutY="250.0" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="183.0" text="Add Patient" />
     <Hyperlink id="logOut" layoutX="537.0" layoutY="9.0" onAction="#logOut" text="Log Out" textFill="#1400ff" underline="true" />
-    <Button id="editPatient" fx:id="editEntry" layoutX="410.0" layoutY="280.0" mnemonicParsing="false" onAction="#newEntry" prefWidth="183.0" text="Add/Edit Entry" />
   </children>
 </AnchorPane>
