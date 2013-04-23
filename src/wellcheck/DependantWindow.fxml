@@ -12,33 +12,20 @@
   <content>
     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="204.0">
       <children>
-        <Text layoutX="85.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Make" />
-        <Text layoutX="58.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A Dependant to" />
-        <Button fx:id="confirm1" layoutX="14.0" layoutY="124.0" mnemonicParsing="false" text="Confirm" />
+        <Label fx:id="confirmtext" alignment="TOP_LEFT" layoutX="13.0" layoutY="14.0" prefHeight="97.0" prefWidth="178.0" wrapText="true">
+          <labelFor>
+            <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="174.0" />
+          </labelFor>
+        </Label>
+        <Text fx:id="text1" layoutX="85.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Make" />
+        <Text fx:id="text2" layoutX="58.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A Dependant to" />
+        <Button fx:id="confirm1" layoutX="14.0" layoutY="124.0" mnemonicParsing="false" onAction="#confirm1" text="Confirm" />
         <Button fx:id="cancel1" layoutX="130.0" layoutY="124.0" mnemonicParsing="false" onAction="#close" text="Cancel" />
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="204.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-          <children>
-            <Label fx:id="confirmtext" alignment="TOP_LEFT" layoutX="14.0" layoutY="6.0" prefHeight="64.0" prefWidth="178.0" wrapText="true">
-              <labelFor>
-                <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="174.0" />
-              </labelFor>
-            </Label>
-            <Button fx:id="confirm2" layoutX="14.0" layoutY="123.0" mnemonicParsing="false" text="Confirm" />
-            <Button fx:id="cancel2" layoutX="130.0" layoutY="123.0" mnemonicParsing="false" text="Cancel" onAction="#close" />
-          </children>
-        </AnchorPane>
-        <ComboBox fx:id="dependee" layoutX="14.0" layoutY="39.0" prefHeight="21.0" prefWidth="172.0" promptText="Select Patient">
-          <items>
-            <FXCollections fx:factory="observableArrayList">
-            </FXCollections>
-          </items>
-        </ComboBox>
-        <ComboBox fx:id="depender" layoutX="14.0" layoutY="90.0" prefHeight="21.0" prefWidth="172.0" promptText="Select Patient">
-          <items>
-            <FXCollections fx:factory="observableArrayList">
-            </FXCollections>
-          </items>
-        </ComboBox>
+        <Button fx:id="confirm2" layoutX="14.0" layoutY="124.0" mnemonicParsing="false" onAction="#confirm2" text="Confirm" />
+        <Button fx:id="cancel2" layoutX="130.0" layoutY="124.0" mnemonicParsing="false" onAction="#cancel2" text="Cancel" />
+        <ComboBox fx:id="dependee" layoutX="14.0" layoutY="39.0" prefHeight="21.0" prefWidth="172.0" promptText="Select Patient" />
+        <ComboBox fx:id="depender" layoutX="14.0" layoutY="90.0" prefHeight="21.0" prefWidth="172.0" promptText="Select Patient" />
+        <Button fx:id="donebutton" layoutX="78.0" layoutY="124.0" mnemonicParsing="false" onAction="#close" text="Done" />
       </children>
     </AnchorPane>
   </content>

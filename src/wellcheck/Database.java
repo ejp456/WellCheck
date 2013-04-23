@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import java.sql.PreparedStatement; Everything seems to work using this statement
 import com.mysql.jdbc.PreparedStatement;
 import java.util.*;
 
@@ -251,32 +250,50 @@ public String getDoctorLast(String id){
 }
 
 /*Kent's method
- * This method queries using an arbitrary query the database and returns
- * an ArrayList of List, with the container arraylist representing rows
- * and the internal List representing columns.
+ * This method queries the database using an arbitrary string and returns
+ * a ResultSet object which turned out to be less idiotic to deal with
+ * than nested ArrayLists.
  * 
  */
-public ArrayList dbQuery(String qstring){
+/*public ResultSet dbQuery(String qstring){
+    try {
+        statement = (PreparedStatement) con.prepareStatement(qstring);
+        rs = statement.executeQuery();
+        return rs;
+}   catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(Database.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+            return null;
+    }
+}*/
+
+/*Kent's method
+ * This method queries the database using an arbitrary string and returns
+ * a List of Lists. Proper processing of the results is done in the calling
+ * method.
+ */
+
+public List dbQuery(String qstring) {
     try {
         statement = (PreparedStatement) con.prepareStatement(qstring);
         rs = statement.executeQuery();
         rsmd = rs.getMetaData();
 
         List<Object> objlist;
-        ArrayList<List> returnlist = new ArrayList();
+        List<List> returnlist = new ArrayList();
 
-        while(rs.next()) {
+        while (rs.next()) {
             objlist = new ArrayList();
-            for(int i = 1; i <= rsmd.getColumnCount(); i++) {
+            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                 objlist.add(rs.getObject(i));
             }
             returnlist.add(objlist);
         }
         return returnlist;
-}   catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(Database.class.getName());
-            lgr.log(Level.SEVERE, ex.getMessage(), ex);
-            return null;
+    } catch (SQLException ex) {
+        Logger lgr = Logger.getLogger(Database.class.getName());
+        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        return null;
     }
 }
 

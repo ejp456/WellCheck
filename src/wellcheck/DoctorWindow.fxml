@@ -2,17 +2,16 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.*?>
-<?import javafx.collections.*?>
+<?import javafx.scene.layout.*?>
 <?import wellcheck.*?>
-
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.DoctorWindowController">
   <children>
-    <TabPane layoutX="14.0" layoutY="45.0" prefHeight="342.0" prefWidth="384.0" tabClosingPolicy="UNAVAILABLE">
+    <TabPane layoutX="14.0" layoutY="45.0" prefHeight="342.0" prefWidth="572.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab fx:id="patientstab" text="Patients">
           <content>
@@ -20,60 +19,80 @@
               <children>
                 <TableView fx:id="patientTable" prefHeight="310.0" prefWidth="384.0">
                   <columns>
-                     <TableColumn fx:id="patient" prefWidth="192.0" text="Patient">
-                        <cellValueFactory><PropertyValueFactory property="patient" />
-                            </cellValueFactory>
+                    <TableColumn prefWidth="192.0" text="Patient" fx:id="patient">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="patient" />
+                      </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="doctor" prefWidth="192.0" text="Doctor">
-                        <cellValueFactory><PropertyValueFactory property="doctor" />
-                            </cellValueFactory>
+                    <TableColumn prefWidth="192.0" text="Doctor" fx:id="doctor">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="doctor" />
+                      </cellValueFactory>
                     </TableColumn>
                   </columns>
-                  <items>
-                     <FXCollections fx:id ="patientList" fx:factory="observableArrayList">
-                         
-                     </FXCollections>
-                   </items>
                 </TableView>
+                <AnchorPane id="AnchorPane" layoutX="389.0" layoutY="173.0" prefHeight="137.0">
+                  <children>
+                    <Button fx:id="editPatient" layoutY="59.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="183.0" text="Edit Patient Information" />
+                    <Button fx:id="addDependant" layoutY="88.0" mnemonicParsing="false" onAction="#addDependant" prefWidth="183.0" text="Add Dependant to Patient" />
+                    <Button fx:id="removePatient" layoutY="115.0" mnemonicParsing="false" onAction="#removePatient" prefWidth="183.0" text="Remove Patient" />
+                    <Button fx:id="addPatient" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="183.0" text="Add Patient" />
+                    <Button id="editPatient" fx:id="editEntry" layoutY="30.0" mnemonicParsing="false" onAction="#newEntry" prefWidth="183.0" text="Add/Edit Entry" />
+                  </children>
+                </AnchorPane>
               </children>
             </AnchorPane>
           </content>
         </Tab>
         <Tab fx:id="datatab" text="Data">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="286.0">
-              <children>
-                <TableView prefHeight="310.0" prefWidth="384.0">
-                  <columns>
-                    <TableColumn prefWidth="192.0" text="Patient" />
-                    <TableColumn prefWidth="192.0" text="Doctor" />
-                  </columns>
-                </TableView>
-              </children>
-            </AnchorPane>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="286.0" />
           </content>
         </Tab>
         <Tab fx:id="prescriptionstab" text="Prescriptions">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView prefHeight="310.0" prefWidth="384.0">
+                <TableView fx:id="PrescriptionTable" prefHeight="264.0" prefWidth="572.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
                   <columns>
-                    <TableColumn prefWidth="192.0" text="Patient" />
-                    <TableColumn prefWidth="192.0" text="Doctor" />
+                    <TableColumn prefWidth="150.0" text="Prescription" fx:id="prescription">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="prescription" />
+                      </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="150.0" text="Treatment" fx:id="treatment">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="treatment" />
+                      </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="100.0" text="Prescriber" fx:id="doctorname">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="doctorname" />
+                      </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="86.0" text="Issue Date" fx:id="date">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="date" />
+                      </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="85.0" text="Length" fx:id="length">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="length" />
+                      </cellValueFactory>
+                    </TableColumn>
                   </columns>
                 </TableView>
+                <ComboBox fx:id="prescriptioncombobox" layoutX="14.0" layoutY="10.0" onAction="#prescriptionComboBoxChanged" prefHeight="21.0" prefWidth="272.0" promptText="Select Patient" />
+                <Button layoutX="301.0" layoutY="10.0" mnemonicParsing="false" onAction="#addPrescription" prefWidth="80.0" text="Add" />
+                <Button layoutX="389.0" layoutY="10.0" mnemonicParsing="false" onAction="#editPrescription" prefWidth="80.0" text="Edit" />
+                <Button layoutX="478.0" layoutY="10.0" mnemonicParsing="false" onAction="#removePrescription" prefWidth="80.0" text="Remove" />
+                <Label fx:id="prescriptionerror" layoutX="14.0" layoutY="31.0" text="Label" />
               </children>
             </AnchorPane>
           </content>
         </Tab>
       </tabs>
     </TabPane>
-    <Button fx:id="editPatient" layoutX="410.0" layoutY="309.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="183.0" text="Edit Patient Information" />
-    <Button fx:id="addDependant" layoutX="410.0" layoutY="338.0" mnemonicParsing="false" prefWidth="183.0" text="Add Dependant to Patient" onAction="#addDependant" />
-    <Button fx:id="removePatient" layoutX="410.0" layoutY="365.0" mnemonicParsing="false" prefWidth="183.0" text="Remove Patient" onAction="#removePatient"/>
-    <Button fx:id="addPatient" layoutX="410.0" layoutY="250.0" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="183.0" text="Add Patient" />
     <Hyperlink id="logOut" layoutX="537.0" layoutY="9.0" onAction="#logOut" text="Log Out" textFill="#1400ff" underline="true" />
-    <Button id="editPatient" fx:id="editEntry" layoutX="410.0" layoutY="280.0" mnemonicParsing="false" onAction="#newEntry" prefWidth="183.0" text="Add/Edit Entry" />
   </children>
 </AnchorPane>
