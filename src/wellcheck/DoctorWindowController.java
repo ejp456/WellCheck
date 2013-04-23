@@ -35,7 +35,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     @FXML private ObservableList<dataTable> dataList;
     @FXML private TableView patientTable;
     @FXML private TableColumn patient, doctor;
-    @FXML private ComboBox patientDropDown;
+    @FXML private static ComboBox patientDropDown;
     private Database db = new Database();
     ScreenController myController;
     
@@ -82,6 +82,14 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         
         
     }
+    @FXML protected void showGraph(ActionEvent event)throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("LineChart.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+       
+        stage.setScene(scene);
+        stage.show();
+    }
     @FXML protected void addDependant(ActionEvent event) throws Exception{
        Parent root = FXMLLoader.load(getClass().getResource("DependantWindow.fxml"));
        Stage stage = new Stage();
@@ -124,5 +132,12 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     }
     public static void addPatient(String p,String d){
         patientList.add(new PatientTable(p,d));
+    }
+    public static String getSelectedPatient() {
+        String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
+        String delims = "[ ]";
+        String[] tokens = name.split(delims);
+        
+        return tokens[0];
     }
 }

@@ -317,7 +317,39 @@ public void updateDB(String qstring){
         lgr.log(Level.SEVERE, ex.getMessage(), ex);
     }
 }
-
+public String getId(String name){
+     try {
+    int count = 0;
+    statement = (PreparedStatement) con.prepareStatement("SELECT userid FROM users WHERE FirstName = \""+name+"\"");
+    rs = statement.executeQuery();
+    while(rs.next()){
+    return rs.getString(1);
+    }
+        return null;
+    } catch (SQLException ex) {
+		Logger lgr = Logger.getLogger(Database.class.getName());
+        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        return null;
+	}
+}
+public String[] getInfo(String id){
+    int count = 0;
+    String[] array = new String[20];
+     try {
+    statement = (PreparedStatement) con.prepareStatement("SELECT Date, BloodPressure, SugarLevel, Weight FROM Records WHERE PatientId = \""+id+"\"");
+    rs = statement.executeQuery();
+    while(rs.next()){
+        array[count] = rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4);
+        count++;
+    }
+    array[count] = null;
+    return array;
+    } catch (SQLException ex) {
+		Logger lgr = Logger.getLogger(Database.class.getName());
+        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        return null;
+	}
+}
 public void closeConnection(){
     try {
         if (rs != null) {
