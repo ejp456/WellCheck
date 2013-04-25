@@ -30,7 +30,7 @@
                       </cellValueFactory>
                     </TableColumn>
                   </columns>
-                  <items>
+                   <items>
                      <FXCollections fx:id ="patientList" fx:factory="observableArrayList">
                          
                      </FXCollections>
@@ -38,9 +38,8 @@
                 </TableView>
                 <Button fx:id="removePatient" layoutX="417.0" layoutY="284.0" mnemonicParsing="false" onAction="#removePatient" prefWidth="183.0" text="Remove Patient" />
                 <Button fx:id="addDependant" layoutX="417.0" layoutY="254.0" mnemonicParsing="false" onAction="#addDependant" prefWidth="183.0" text="Add Dependant to Patient" />
-                <Button id="editPatient" fx:id="editEntry" layoutX="417.0" layoutY="223.0" mnemonicParsing="false" onAction="#newEntry" prefWidth="183.0" text="Add/Edit Entry" />
-                <Button fx:id="editPatient" layoutX="417.0" layoutY="193.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="183.0" text="Edit Patient Information" />
-                <Button fx:id="addPatient" layoutX="417.0" layoutY="160.0" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="183.0" text="Add Patient" />
+                <Button fx:id="editPatient" layoutX="417.0" layoutY="226.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="183.0" text="Edit Patient Information" />
+                <Button fx:id="addPatient" layoutX="417.0" layoutY="197.0" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="183.0" text="Add Patient" />
               </children>
             </AnchorPane>
           </content>
@@ -83,13 +82,15 @@
                      </FXCollections>
                    </items>
                 </TableView>
-                <ComboBox fx:id="patientDropDown" layoutY="3.0" onAction="#dataComboBox" prefWidth="143.0">
+                 <ComboBox fx:id="patientDropDown" layoutY="3.0" onAction="#dataComboBox" prefWidth="143.0">
                     <items>
                     <FXCollections fx:id="comboList" fx:factory="observableArrayList">
                     </FXCollections>
                   </items>
             </ComboBox>
                 <Button fx:id="graphButton" layoutX="150.0" layoutY="3.0" mnemonicParsing="false" onAction="#showGraph" text="Graph" />
+                <Button id="graphButton" fx:id="addEntry" layoutX="211.0" layoutY="3.0" mnemonicParsing="false" onAction="#newEntry" text="Add" />
+                <Button id="graphButton" fx:id="editEntry" layoutX="259.0" layoutY="3.0" mnemonicParsing="false" onAction="#newEntry" text="Edit" />
               </children>
             </AnchorPane>
           </content>

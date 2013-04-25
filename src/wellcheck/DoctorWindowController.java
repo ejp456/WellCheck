@@ -32,11 +32,12 @@ import javafx.stage.Stage;
 public class DoctorWindowController implements Initializable, ControlledScreen {
     @FXML public static ObservableList<PatientTable> patientList;
     @FXML public static ObservableList<String> comboList;
-    @FXML private ObservableList<dataTable> dataList;
+    @FXML public static ObservableList<dataTable> dataList;
     @FXML private TableView patientTable;
     @FXML private TableColumn patient, doctor;
-    @FXML private static ComboBox patientDropDown;
-    private Database db = new Database();
+    @FXML public static ComboBox patientDropDown;
+    public static ArrayList<dataTable> data;
+    public static  Database db = new Database();
     ScreenController myController;
     
 
@@ -104,7 +105,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
        String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
        String delims = "[ ]";
        String[] tokens = name.split(delims);
-       ArrayList<dataTable> data = db.dataTable(tokens[0], tokens[1]);
+       data = db.dataTable(tokens[0], tokens[1]);
        dataList.addAll(data);
        db.closeConnection();
     }  
@@ -133,11 +134,25 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     public static void addPatient(String p,String d){
         patientList.add(new PatientTable(p,d));
     }
+    public static void refresh(){
+       db.Connect();
+       dataList.clear();
+       String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
+       String delims = "[ ]";
+       String[] tokens = name.split(delims);
+       data = db.dataTable(tokens[0], tokens[1]);
+       dataList.addAll(data);
+       db.closeConnection();
+    }
     public static String getSelectedPatient() {
         String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
         String delims = "[ ]";
         String[] tokens = name.split(delims);
         
         return tokens[0];
+    }
+    public static String getPatientName(){
+        String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
+        return name;
     }
 }

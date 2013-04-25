@@ -273,6 +273,28 @@ public String getDoctorLast(String id){
         return null;
 	}
 }
+public void addEntry(String first , String last ,String BloodPressure ,String SugarLevel ,String Weight , String Date ,String Comments){
+    
+    try {
+    String PatientId = "";
+    statement = (PreparedStatement) con.prepareStatement("SELECT userid FROM users WHERE FirstName = \""+first+"\" AND LastName=\""+last+"\"");
+    rs = statement.executeQuery();
+    while(rs.next()){
+        PatientId = rs.getString(1);
+    }
+    System.out.println("this is a ID "+PatientId);
+    statement = (PreparedStatement) con.prepareStatement(
+            "INSERT INTO `1_0362c2e_3`.`Records` (`id`, `PatientId`, `BloodPressure`, `SugarLevel`, `Weight`, "
+            + "`Date`, `Comments`) "
+            + "VALUES ('" + 1 + "', '" + PatientId + "', '" + BloodPressure + "', '" + SugarLevel + "', '" + Weight + "', '"+Date + "', '" + Comments + "');"); 
+    statement.execute();
+
+    
+    } catch (SQLException ex) {
+		Logger lgr = Logger.getLogger(Database.class.getName());
+        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+	}
+}
 
 /*Kent's method
  * This method queries using an arbitrary query the database and returns
