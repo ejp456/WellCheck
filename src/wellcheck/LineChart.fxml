@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.LineChartController">
+  <children>
+    <LineChart fx:id="lineChart" layoutX="50.0" title="Health Records">
+      <xAxis>
+        <NumberAxis fx:id="xAxis" autoRanging="false" label="Month" minorTickCount="0" side="BOTTOM" tickUnit="1.0" upperBound="12.99" />
+      </xAxis>
+      <yAxis>
+        <NumberAxis fx:id="yAxis" label="" side="LEFT" />
+      </yAxis>
+    </LineChart>
+  </children>
+</AnchorPane>
