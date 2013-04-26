@@ -119,6 +119,7 @@ public boolean patientTable(){
     rs = statement.executeQuery();
     if(rs.next()){
         DoctorWindowController.addPatient(patient.get(i), rs.getString(1)+" "+rs.getString(2));
+        DoctorWindowController.patientComboBox(patient.get(i));
         }
     }
         return false;
@@ -160,8 +161,8 @@ public boolean patientScreenTable(String firstname,String lastname){
     statement = (PreparedStatement) con.prepareStatement("SELECT FirstName, LastName FROM users JOIN Patient ON (users.userid = Patient.Doctor) WHERE Patient.Doctor = \""+doctor.get(i)+"\"");
     rs = statement.executeQuery();
     if(rs.next()){
-        PatientWindowController.addPatient2(patient.get(i), rs.getString(1)+" "+rs.getString(2));
-        PatientWindowController.patientComboBox(patient.get(i));
+        DoctorWindowController.addPatient(patient.get(i), rs.getString(1)+" "+rs.getString(2));
+        DoctorWindowController.patientComboBox(patient.get(i));
         }
     }
         return false;

@@ -11,7 +11,7 @@
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="485.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.AddNewEntryController">
   <children>
     <TextField fx:id="enterComments" layoutX="208.0" layoutY="47.0" prefHeight="68.0" prefWidth="236.0" promptText="BP high today" />
-    <Text layoutX="297.0" layoutY="42.0" scaleX="1.029978704511343" scaleY="1.259774510932849" strokeType="OUTSIDE" strokeWidth="0.0" text="Comments" />
+    <Text fx:id="Comments"  layoutX="297.0" layoutY="42.0" scaleX="1.029978704511343" scaleY="1.259774510932849" strokeType="OUTSIDE" strokeWidth="0.0" text="Comments" />
     <ChoiceBox fx:id="date_day" layoutX="65.0" layoutY="123.0" minHeight="16.51025390625" prefHeight="24.0" prefWidth="59.076904296875">
       <items>
         <FXCollections fx:factory="observableArrayList">

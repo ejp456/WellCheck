@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -37,6 +38,11 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     @FXML private TableColumn patient, doctor;
     @FXML public static ComboBox patientDropDown;
     @FXML public static Label typeLabel;
+    @FXML public static Button editEntry;
+    @FXML public static Button addPatient;
+    @FXML public static Button editPatient;
+    @FXML public static Button addDep;
+    @FXML public static Button removePatient;
     public static ArrayList<dataTable> data;
     public static  Database db = new Database();
     ScreenController myController;
@@ -112,19 +118,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     }  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       db = new Database();
-        db.Connect();
-        patientDropDown.getItems().clear();
-        
-        ArrayList plist = db.dbQuery("SELECT FirstName, LastName, Patient.Doctor FROM users JOIN Patient ON (users.userid = Patient.userid)");
-        ArrayList<String> patientname = new ArrayList(plist.size());
-    
-        for(int i = 0; i < plist.size(); i++){
-            patientname.add((String) ((ArrayList) plist.get(i)).get(0) + " " + (String) ((ArrayList) plist.get(i)).get(1));
-        }
-        
-        ObservableList<String> olist = FXCollections.observableList(patientname);
-        patientDropDown.getItems().addAll(olist);
+       
       
 
         
@@ -134,6 +128,9 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     }
     public static void addPatient(String p,String d){
         patientList.add(new PatientTable(p,d));
+    }
+     public static void patientComboBox(String p){
+        comboList.add(p);
     }
     public static void refresh(){
        db.Connect();
@@ -151,6 +148,23 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         String[] tokens = name.split(delims);
         
         return tokens[0];
+    }
+    public static boolean isNurse(){
+        String type = (String)typeLabel.getText();
+        String delims = "[ ]";
+        String[] tokens = type.split(delims);
+        if(tokens[tokens.length-1].equalsIgnoreCase("nurse")){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public static void patientWindow(){
+       editEntry.setVisible(false);
+       addPatient.setVisible(false);
+       editPatient.setVisible(false);
+       addDep.setVisible(false);
+       removePatient.setVisible(false);
     }
     public static String getPatientName(){
         String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
