@@ -87,6 +87,21 @@ public boolean checkPassword(String user,String password){
         return false;
 	}
 }
+public String getUserType(String username,String password){
+       try {
+    int count = 0;
+    statement = (PreparedStatement) con.prepareStatement("SELECT usertype FROM users WHERE username = \""+username+"\" AND password=\""+password+"\"");
+    rs = statement.executeQuery();
+    while(rs.next()){
+    return rs.getString(1);
+    }
+        return null;
+    } catch (SQLException ex) {
+		Logger lgr = Logger.getLogger(Database.class.getName());
+        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        return null;
+	} 
+}
 public boolean patientTable(){
     try {
     ArrayList<String> patient = new ArrayList();
@@ -104,6 +119,49 @@ public boolean patientTable(){
     rs = statement.executeQuery();
     if(rs.next()){
         DoctorWindowController.addPatient(patient.get(i), rs.getString(1)+" "+rs.getString(2));
+        }
+    }
+        return false;
+    } catch (SQLException ex) {
+		Logger lgr = Logger.getLogger(Database.class.getName());
+        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        return false;
+	}
+}
+public boolean patientScreenTable(String firstname,String lastname){
+     try {
+    ArrayList<String> patient = new ArrayList();
+    ArrayList<Integer> doctor = new ArrayList();
+    String userid = "";
+    statement = (PreparedStatement) con.prepareStatement("SELECT userid FROM users Where FirstName= \""+firstname+"\" AND LastName=\""+lastname+"\"");
+    rs = statement.executeQuery();
+    if(rs.next()){
+    userid = rs.getString(1);
+    }
+    statement = (PreparedStatement) con.prepareStatement("SELECT FirstName, LastName FROM users JOIN Patient ON (users.userid = Patient.userid) WHERE Patient.DependantTo =\""+userid+"\"");
+    rs = statement.executeQuery();
+    while(rs.next()){
+            patient.add(rs.getString(1)+" "+rs.getString(2));
+      
+                     
+    }
+    statement = (PreparedStatement) con.prepareStatement("SELECT FirstName, LastName, Patient.Doctor FROM users JOIN Patient ON (users.userid = Patient.userid)");
+    rs = statement.executeQuery();
+    while(rs.next()){
+        if(rs.getString(1).equalsIgnoreCase(firstname) && rs.getString(2).equalsIgnoreCase(lastname)){
+            patient.add(rs.getString(1)+" "+rs.getString(2));
+            doctor.add(Integer.parseInt(rs.getString(3)));
+        }else if(patient.contains((String)rs.getString(1)+" "+rs.getString(2))){
+            doctor.add(Integer.parseInt(rs.getString(3)));
+        }          
+    }
+    int j = 0;
+    for(int i=0;i<doctor.size();i++){
+    statement = (PreparedStatement) con.prepareStatement("SELECT FirstName, LastName FROM users JOIN Patient ON (users.userid = Patient.Doctor) WHERE Patient.Doctor = \""+doctor.get(i)+"\"");
+    rs = statement.executeQuery();
+    if(rs.next()){
+        PatientWindowController.addPatient2(patient.get(i), rs.getString(1)+" "+rs.getString(2));
+        PatientWindowController.patientComboBox(patient.get(i));
         }
     }
         return false;
@@ -136,7 +194,7 @@ public ArrayList<dataTable> dataTable(String fName,String lName){
 	}
 }
 public String getSecretQuestion(String fName, String lName){
-     try {
+    try {
     int count = 0;
     statement = (PreparedStatement) con.prepareStatement("SELECT SecretQuestion FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
     rs = statement.executeQuery();

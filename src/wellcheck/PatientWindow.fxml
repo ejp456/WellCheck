@@ -9,42 +9,38 @@
 <?import javafx.scene.layout.*?>
 <?import wellcheck.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.DoctorWindowController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.PatientWindowController">
   <children>
     <TabPane layoutY="45.0" prefHeight="355.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
-        <Tab fx:id="patientstab" text="Patients">
+        <Tab fx:id="patientstab2" text="Patients">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView fx:id="patientTable" prefHeight="319.0" prefWidth="384.0">
+                <TableView fx:id="patientTable2" prefHeight="319.0" prefWidth="384.0">
                   <columns>
-                    <TableColumn prefWidth="192.0" text="Patient" fx:id="patient">
+                    <TableColumn prefWidth="192.0" text="Patient" fx:id="patient2">
                       <cellValueFactory>
                         <PropertyValueFactory property="patient" />
                       </cellValueFactory>
                     </TableColumn>
-                    <TableColumn prefWidth="192.0" text="Doctor" fx:id="doctor">
+                    <TableColumn prefWidth="192.0" text="Doctor" fx:id="doctor2">
                       <cellValueFactory>
                         <PropertyValueFactory property="doctor" />
                       </cellValueFactory>
                     </TableColumn>
                   </columns>
                    <items>
-                     <FXCollections fx:id ="patientList" fx:factory="observableArrayList">
+                     <FXCollections fx:id ="patientList2" fx:factory="observableArrayList">
                          
                      </FXCollections>
                    </items>
                 </TableView>
-                <Button fx:id="removePatient" layoutX="417.0" layoutY="284.0" mnemonicParsing="false" onAction="#removePatient" prefWidth="183.0" text="Remove Patient" />
-                <Button fx:id="addDependant" layoutX="417.0" layoutY="254.0" mnemonicParsing="false" onAction="#addDependant" prefWidth="183.0" text="Add Dependant to Patient" />
-                <Button fx:id="editPatient" layoutX="417.0" layoutY="226.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="183.0" text="Edit Patient Information" />
-                <Button fx:id="addPatient" layoutX="417.0" layoutY="197.0" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="183.0" text="Add Patient" />
               </children>
             </AnchorPane>
           </content>
         </Tab>
-        <Tab fx:id="datatab" text="Data">
+        <Tab fx:id="datatab2" text="Data">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="286.0">
               <children>
@@ -77,25 +73,23 @@
                     </TableColumn>
                   </columns>
                   <items>
-                     <FXCollections fx:id ="dataList" fx:factory="observableArrayList">
+                     <FXCollections fx:id ="dataList2" fx:factory="observableArrayList">
                          
                      </FXCollections>
                    </items>
                 </TableView>
-                <ComboBox fx:id="patientDropDown" layoutY="3.0" onAction="#dataComboBox" prefWidth="143.0">
+                <ComboBox fx:id="patientDropDown2" layoutY="3.0" prefWidth="143.0" onAction="#dataComboBox2">
                     <items>
-                    <FXCollections fx:id="comboList" fx:factory="observableArrayList">
+                    <FXCollections fx:id="comboList2" fx:factory="observableArrayList">
                     </FXCollections>
                   </items>
             </ComboBox>
-                <Button fx:id="graphButton" layoutX="150.0" layoutY="3.0" mnemonicParsing="false" onAction="#showGraph" text="Graph" />
-                <Button id="graphButton" fx:id="addEntry" layoutX="211.0" layoutY="3.0" mnemonicParsing="false" onAction="#newEntry" text="Add" />
-                <Button id="graphButton" fx:id="editEntry" layoutX="259.0" layoutY="3.0" mnemonicParsing="false" onAction="#newEntry" text="Edit" />
+                <Button fx:id="graphButton2" layoutX="150.0" layoutY="3.0" mnemonicParsing="false" text="Graph" />
               </children>
             </AnchorPane>
           </content>
         </Tab>
-        <Tab fx:id="prescriptionstab" text="Prescriptions">
+        <Tab fx:id="prescriptionstab2" text="Prescriptions">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
@@ -111,7 +105,7 @@
         </Tab>
       </tabs>
     </TabPane>
-    <Hyperlink id="logOut" layoutX="537.0" layoutY="9.0" onAction="#logOut" text="Log Out" textFill="#1400ff" underline="true" />
-    <Label fx:id="typeLabel" layoutX="14.0" layoutY="14.0" />
+    <Hyperlink id="logOut2" layoutX="537.0" layoutY="9.0" text="Log Out" textFill="#1400ff" underline="true" onAction="#logOut2" />
+    <Label fx:id="typeLabel2" layoutX="14.0" layoutY="14.0" />
   </children>
 </AnchorPane>

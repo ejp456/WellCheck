@@ -21,6 +21,8 @@ public class WellCheck extends Application {
     public static String screenFile1 = "Sample.fxml";
     public static String screenID2 = "DoctorWindow";
     public static String screenFile2 = "DoctorWindow.fxml";
+    public static String screenID3 = "PatientWindow";
+    public static String screenFile3 = "PatientWindow.fxml";
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -28,6 +30,7 @@ public class WellCheck extends Application {
         //adds screens to GUI
         mainContainer.loadScreen(WellCheck.screenID1, WellCheck.screenFile1);
         mainContainer.loadScreen(WellCheck.screenID2, WellCheck.screenFile2);
+        mainContainer.loadScreen(WellCheck.screenID3, WellCheck.screenFile3);
         
         mainContainer.setScreen(WellCheck.screenID1);
         

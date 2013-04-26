@@ -36,6 +36,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     @FXML private TableView patientTable;
     @FXML private TableColumn patient, doctor;
     @FXML public static ComboBox patientDropDown;
+    @FXML public static Label typeLabel;
     public static ArrayList<dataTable> data;
     public static  Database db = new Database();
     ScreenController myController;
@@ -127,9 +128,9 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
       
 
         
-    }    
-    public void setScreenParent(ScreenController screenParent){
-        myController = screenParent;
+    }
+    public static void userType(String user){
+        typeLabel.setText("Logged in as: "+user);
     }
     public static void addPatient(String p,String d){
         patientList.add(new PatientTable(p,d));
@@ -154,5 +155,8 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     public static String getPatientName(){
         String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
         return name;
+    }
+     public void setScreenParent(ScreenController screenParent){
+        myController = screenParent;
     }
 }

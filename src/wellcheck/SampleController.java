@@ -23,6 +23,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 import java.util.List;
 import java.util.ArrayList;
+import static wellcheck.DoctorWindowController.db;
 
 /**
  *
@@ -33,21 +34,39 @@ public class SampleController implements Initializable, ControlledScreen {
     @FXML private TextField username;
     @FXML private PasswordField password;
     private Database db = new Database();
+    public static String patient = "";
     ScreenController myController;
     private ObservableList<PatientTable> patientList;
    
     
     @FXML protected void handleSubmitButtonAction(ActionEvent event) {
         db.Connect();
-        boolean test = db.userExist(username.getText().toString());
+        String user = username.getText().toString();
+        String pass = password.getText().toString();
+        boolean test = db.userExist(user);
+        String usertype = db.getUserType(user, pass);
         if(test){
         System.out.println("User Exists");
-        test = db.checkPassword(username.getText().toString(), password.getText().toString());
+        test = db.checkPassword(user, pass);
             if(test){
+                
+                if(usertype.equalsIgnoreCase("Nurse")){
+                    System.out.println("Password is correct");
+                    myController.setScreen(WellCheck.screenID2);
+                    db.patientTable();
+                }
+                else if(usertype.equalsIgnoreCase("Patient")){
+                     ArrayList plist = db.dbQuery("SELECT FirstName, LastName FROM users Where username =\""+user+"\"");
+                     //patient = (String) ((ArrayList) plist.get(0)).get(0) + " " + (String) ((ArrayList) plist.get(0)).get(1);
+                     db.patientScreenTable((String) ((ArrayList) plist.get(0)).get(0), (String) ((ArrayList) plist.get(0)).get(1));
+                     myController.setScreen(WellCheck.screenID3);
+                }else{
                 //if username and password is correct program moves to main screen
-                System.out.println("Password is correct");
-                myController.setScreen(WellCheck.screenID2);
-                db.patientTable();
+                    System.out.println("Password is correct");
+                    myController.setScreen(WellCheck.screenID2);
+                    db.patientTable();
+                    wellcheck.DoctorWindowController.userType(usertype);
+                    }
                 
                 }
         }
