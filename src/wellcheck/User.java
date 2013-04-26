@@ -102,7 +102,7 @@ public class User {
         
         //This loop finds the location to insert the object into the database
         int j = 1;
-        for(int i = 0; i < plist.size() && j != (Integer) plist.get(i).get(0); i++)
+        for(int i = 0; i < plist.size() && j == (Integer) plist.get(i).get(0); i++)
         {
             j++;
         }

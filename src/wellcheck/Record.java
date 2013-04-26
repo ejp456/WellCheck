@@ -80,7 +80,7 @@ public class Record {
         //This loop finds the location to insert the object into the database
         int j = 1;
         if (!list.isEmpty()) {
-            for (int i = 0; i < list.size() && j != (Integer) list.get(i).get(0); i++) {
+            for (int i = 0; i < list.size() && j == (Integer) list.get(i).get(0); i++) {
                 j++;
             }
         }

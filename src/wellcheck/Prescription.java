@@ -32,7 +32,7 @@ public class Prescription {
         length = 0;
     }
 
-    public Prescription(int id, int patientid, int doctorid, String prescription,
+    public Prescription(int id, int patientid, int doctorid, String doctorname, String prescription,
             String treatment, String date, int length) {
         this.id = id;
         this.patientid = patientid;
@@ -83,7 +83,7 @@ public class Prescription {
         db.Connect();
 
         //Checks to see if the object is already in the database
-        //Naively assumes that if rid != 0 the object is already inside
+        //Naively assumes that if p.id != 0 the object is already inside
         if (p.getId() != 0) {
             return;
         }
@@ -91,7 +91,7 @@ public class Prescription {
         //This loop finds the location to insert the object into the database
         int j = 1;
         if (!plist.isEmpty()) {
-            for (int i = 0; i < plist.size() && j != (Integer) plist.get(i).get(0); i++) {
+            for (int i = 0; i < plist.size() && j == (Integer) plist.get(i).get(0); i++) {
                 j++;
             }
         }
@@ -129,7 +129,7 @@ public class Prescription {
                 + "Prescription = '" + p.getPrescription() + "', "
                 + "Treatment = '" + p.getTreatment() + "', "
                 + "Date = '" + p.getDate() + "', "
-                + "Length = '" + p.getLength() + "', "
+                + "Length = '" + p.getLength() + "' "
                 + "WHERE id = " + p.getId();
         db.updateDB(qstring);
         db.closeConnection();

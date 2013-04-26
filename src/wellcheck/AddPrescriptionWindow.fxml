@@ -11,16 +11,18 @@
   <content>
     <AnchorPane id="AnchorPane" prefHeight="176.0" prefWidth="220.0">
       <children>
-        <Button fx:id="cancel" layoutX="153.0" layoutY="139.0" mnemonicParsing="false" onAction="#close" text="Cancel" />
         <TextField id="prescfield" fx:id="prescription" layoutX="9.0" layoutY="3.0" prefWidth="200.0" promptText="Drug Name" />
         <TextField id="treatfield" fx:id="treatment" layoutX="9.0" layoutY="25.0" prefWidth="200.0" promptText="Treatment" />
+        <TextField fx:id="datemonth" depthTest="DISABLE" layoutX="110.0" layoutY="47.0" prefWidth="30.0" promptText="MM" />
+        <TextField fx:id="dateday" layoutX="140.0" layoutY="47.0" prefWidth="30.0" promptText="DD" />
         <TextField id="datefield" fx:id="dateyear" layoutX="170.0" layoutY="47.0" prefWidth="40.0" promptText="YYYY" />
         <TextField fx:id="length" layoutX="10.0" layoutY="69.0" prefWidth="200.0" promptText="Length in Days" />
-        <ComboBox fx:id="doctorbox" layoutX="10.0" layoutY="91.0" prefHeight="21.0" prefWidth="200" promptText="Prescribing Doctor" />
-        <Button fx:id="add" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onAction="#add" text="Add" />
+        <ComboBox fx:id="doctorbox" layoutX="10.0" layoutY="91.0" prefHeight="21.0" prefWidth="200.0" promptText="Prescribing Doctor" />
+        <Button fx:id="add" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onAction="#addedit" text="Add" />
+        <Button fx:id="edit" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onAction="#addedit" text="Edit" />
+        <Button fx:id="remove" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onAction="#remove" text="Remove" />
+        <Button fx:id="cancel" layoutX="153.0" layoutY="139.0" mnemonicParsing="false" onAction="#close" text="Cancel" />
         <Label fx:id="datelabel" layoutX="10.0" layoutY="50.0" text="Issue Date" />
-        <TextField fx:id="dateday" layoutX="140.0" layoutY="47.0" prefWidth="30.0" promptText="DD" />
-        <TextField fx:id="datemonth" depthTest="DISABLE" layoutX="110.0" layoutY="47.0" prefWidth="30.0" promptText="MM" />
         <Label fx:id="errorlabel" layoutX="10.0" layoutY="120.0" prefWidth="200.0" />
       </children>
     </AnchorPane>
