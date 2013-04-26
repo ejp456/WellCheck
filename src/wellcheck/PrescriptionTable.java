@@ -1,6 +1,10 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Class created by Kent Ehrlich
+ * This class is of the necessary format to be displayed properly in the
+ * prescription tab of the main window.
+ * 
+ * Conversion of Prescription objects to PrescriptionTable objects is provided
+ * for convenience.
  */
 package wellcheck;
 
@@ -20,7 +24,12 @@ public class PrescriptionTable {
     
     public PrescriptionTable()
     {
-        this("","","","","", 0);
+        setPrescription(null);
+        setTreatment(null);
+        setPrescriber(null);
+        setIssuedate(null);
+        setLength(null);
+        this.id = 0;
     }
     
     public PrescriptionTable(String prescription, String treatment, String prescriber, String issuedate, String length, int id)

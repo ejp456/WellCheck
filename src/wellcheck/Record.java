@@ -1,6 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Class created by Kent Ehrlich
+ * 
+ * These are classes with limited utility, mostly to make it convenient
+ * to add or remove things from the database. They were created with the
+ * expectation they would have more utility than they currently do.
  */
 package wellcheck;
 
@@ -46,6 +49,8 @@ public class Record {
         comment = r.comment;
     }
 
+    //This method instantiates an object of the Record class by querying the
+    //database.
     static Record getRecordRow(int id) {
         Database db = new Database();
         db.Connect();
@@ -67,12 +72,14 @@ public class Record {
         return returnrecord;
     }
 
+    //This method inserts an Record object into the database.
+    //To successfully insert, be sure to set id = 0
     static void insertRecordRow(Record r) {
         Database db = new Database();
         db.Connect();
 
         //Checks to see if the object is already in the database
-        //Naively assumes that if rid != 0 the object is already inside
+        //Naively assumes that if id != 0 the object is already inside
         if (r.getId() != 0) {
             return;
         }
@@ -99,6 +106,7 @@ public class Record {
         db.closeConnection();
     }
 
+    //This method modifies an existing entry in the database
     static void updateRecordRow(Record r) {
         Database db = new Database();
         db.Connect();
@@ -114,6 +122,7 @@ public class Record {
         db.closeConnection();
     }
 
+    //This method deletes a record from the database by id
     static void deleteRecordRow(Record r) {
         Database db = new Database();
         db.Connect();

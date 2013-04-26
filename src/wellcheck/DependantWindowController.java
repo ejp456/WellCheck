@@ -1,6 +1,8 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * By Kent Ehrlich
+ * This class controls the operation of the add dependant window.
+ * Primarily, it sets dependancy in the database if the two patients
+ * from the combobox are selected with and not equal
  */
 package wellcheck;
 
@@ -47,6 +49,7 @@ public class DependantWindowController implements Initializable {
     private Label confirmtext;
     private Database db;
 
+    //Closes the Window
     @FXML
     protected void close(ActionEvent event) throws Exception {
         Node source = (Node) event.getSource();
@@ -54,15 +57,24 @@ public class DependantWindowController implements Initializable {
         stage.close();
     }
 
+    //On pressing the confirm1 button, first the method checks for errors
+    //If there are any, it displays an error message.
+    //If not, it modifies the UI to display a confirmation message
     @FXML
     protected void confirm1(ActionEvent event) {
+        //If either patient has not been selected from the combobox, display an error message
         if (dependee.getValue() == null || depender.getValue() == null) {
             confirmtext.setText("Please select a valid value.");
             confirm2.setDisable(true);
-        } else if (dependee.getValue().equals(depender.getValue())) {
+        }
+        //Else if the patients are the same, display an error message
+        else if (dependee.getValue().equals(depender.getValue())) {
             confirmtext.setText("Cannot make someone their own dependent.");
             confirm2.setDisable(true);
-        } else {
+        }
+        //Else, display a confirmation message that the user really does want to
+        //set this dependancy
+        else {
             confirmtext.setText("Are you sure you want to add " + dependee.getValue()
                     + " as a dependant to " + depender.getValue()
                     + "? " + depender.getValue()
@@ -70,6 +82,8 @@ public class DependantWindowController implements Initializable {
                     + "'s records.");
         }
 
+        //Modify the UI to display the confirmation message
+        //And the second confirm and cancel buttons
         text1.setVisible(false);
         text2.setVisible(false);
         confirm1.setVisible(false);
@@ -81,6 +95,7 @@ public class DependantWindowController implements Initializable {
         confirmtext.setVisible(true);
     }
 
+    //On pressing the second confirm button, sets dependancy between the patients
     @FXML
     protected void confirm2(ActionEvent event) {
         String[] provider = ((String) dependee.getValue()).split("\\s+");
@@ -92,10 +107,13 @@ public class DependantWindowController implements Initializable {
 
         List<List> rlist;
 
+        //Queries the database for the patient userids of the patients selected in the combobox
         rlist = db.dbQuery("SELECT userid FROM users WHERE FirstName = '" + provider[0] + "' AND LastName = '" + provider[1] + "'");
         int providerid = (Integer) rlist.get(0).get(0);
         rlist = db.dbQuery("SELECT userid FROM users WHERE FirstName = '" + dependant[0] + "' AND LastName = '" + dependant[1] + "'");
         int dependantid = (Integer) rlist.get(0).get(0);
+        //If both patients have been selected and are not equal
+        //Then the dependancy is set
         if (dependantid != -1 && providerid != -1) {
             db.updateDB("UPDATE Patient SET DependantTo = " + providerid + " WHERE userid = " + dependantid);
             confirmtext.setText("" + depender.getValue() + " set as a dependant to "
@@ -105,6 +123,7 @@ public class DependantWindowController implements Initializable {
                     + dependee.getValue() + ".");
         }
 
+        //Confirmation message
         confirmtext.setText("" + depender.getValue() + " set as a dependant to "
                 + dependee.getValue() + ".");
         confirmtext.setVisible(true);
@@ -115,6 +134,7 @@ public class DependantWindowController implements Initializable {
         db.closeConnection();
     }
 
+    //On pressing the second cancel button, returns to the previous screen
     @FXML
     protected void cancel2(ActionEvent event) {
         text1.setVisible(true);
@@ -129,12 +149,15 @@ public class DependantWindowController implements Initializable {
         confirm2.setDisable(false);
     }
 
+    //Initializes the Add Dependant Window
+    //Loads the two comboboxes with the names of patients
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         db = new Database();
         db.Connect();
 
         List<List> rlist;
+        //Querying the database for patient names
         rlist = db.dbQuery("Select FirstName, LastName FROM users WHERE usertype = 'Patient'");
         ArrayList<String> patientname = new ArrayList();
         Iterator it1 = rlist.iterator();
@@ -144,6 +167,7 @@ public class DependantWindowController implements Initializable {
             patientname.add((String) it2.next() + " " + (String) it2.next());
         }
 
+        //Adding patient names to the comboboxes
         dependee.getItems().addAll(patientname);
         depender.getItems().addAll(patientname);
 

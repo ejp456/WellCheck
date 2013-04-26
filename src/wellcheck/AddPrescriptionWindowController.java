@@ -1,6 +1,8 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * By Kent Ehrlich
+ * This class controls the prescription tab popup windows for adding, editing,
+ * and removing prescription information to and from the database and
+ * to and from the table in the main UI window.
  */
 package wellcheck;
 
@@ -39,6 +41,8 @@ public class AddPrescriptionWindowController implements Initializable {
     private boolean addflag, editflag, removeflag;
     private PrescriptionTable selectedprescription;
     
+    //Adds or edits a prescription entry in the database
+    //Once added, updates the prescription table in DoctorWindowController
     @FXML
     protected void addedit(ActionEvent event) {
         String prescrstring = prescription.getText();
@@ -49,6 +53,7 @@ public class AddPrescriptionWindowController implements Initializable {
         String dmstring = datemonth.getText();
         String dname;
         
+        //Initialization to nonsense values for error checking
         int doctorid = -1;
         int patientid = -1;
         int lengthint = -1;
@@ -58,6 +63,8 @@ public class AddPrescriptionWindowController implements Initializable {
         dname = null;
         boolean validentry;
         
+        //Retreives doctorid without a database hit;
+        //Useful for performance
         if (doctorbox.getValue() != null) {
             for (int i = 0; i < doctorname.get(0).size(); i++) {
                 if ((doctorname.get(0).get(i)).equals(doctorbox.getValue())) {
@@ -69,6 +76,10 @@ public class AddPrescriptionWindowController implements Initializable {
         }
         patientid = parentcontroller.selectedpatientid;
         
+        //Begin error checking
+        
+        //If the fields have valid integers, move on
+        //Else, display an error message
         try {
             lengthint = Integer.parseInt(lengthstring);
             dyint = Integer.parseInt(dystring);
@@ -79,28 +90,42 @@ public class AddPrescriptionWindowController implements Initializable {
             validentry = false;
         }
         
+        //If doctorid is not valid display an error message
         if (!validentry || doctorid == -1) {
             errorlabel.setText("Please enter valid values.");
             errorlabel.setVisible(true);
-        } else if (dyint < 1800 || dyint > 2100 || ddint < 0 || ddint > 31 || dmint < 0 || dmint > 12) {
+        }
+        //Else if the date is not valid, display an error message
+        else if (dyint < 1800 || dyint > 2100 || ddint < 0 || ddint > 31 || dmint < 0 || dmint > 12) {
             errorlabel.setText("Please enter a valid date.");
             errorlabel.setVisible(true);
-        } else if (lengthint < 0) {
+        }
+        //Else if the length is nonsensical, display an error message
+        else if (lengthint < 0) {
             errorlabel.setText("Please enter a valid length.");
             errorlabel.setVisible(true);
-        } else if (prescrstring.equals("") || treatstring.equals("")) {
+        }
+        //Else if the fields are empty, display an error message
+        else if (prescrstring.equals("") || treatstring.equals("")) {
             errorlabel.setText("Please fill all fields.");
             errorlabel.setVisible(true);
-        } else {
+        }
+        //Else, add/edit the prescription
+        else {
+            //Creates a Prescription object to utilize static add/edit methods in the class
             Prescription updateprescription = new Prescription(0, patientid, doctorid, dname, prescrstring, treatstring, dyint + "-" + dmint + "-" + ddint, lengthint);
             if (addflag) {
+                //Inserts a new entry into the database
                 Prescription.insertPrescriptionRow(updateprescription);
             }
             if (editflag) {
+                //Edits an existing entry
                 updateprescription.setId(selectedprescription.getId());
                 Prescription.updatePrescriptionRow(updateprescription);
             }
             
+            //Window displays a confirmation screen, and hides all UI elements
+            //Except for a button that closes the window
             if (addflag) {
                 errorlabel.setText("Prescription added.");
             }
@@ -120,21 +145,27 @@ public class AddPrescriptionWindowController implements Initializable {
             add.setVisible(false);
             edit.setVisible(false);
             cancel.setText("Done");
+            //Updates the table in the main window
             parentcontroller.updatePrescriptionTable();
         }
     }
     
+    //Removes an entry selected from the table
     @FXML
     protected void remove(ActionEvent event) throws Exception {
+        //Creates a prescription object to utilize static delete method in the class
         Prescription p = new Prescription();
         p.setId(selectedprescription.getId());
+        //Deletes the entry from the database
         Prescription.deletePrescriptionRow(p);
         errorlabel.setText("Prescription removed.");
         remove.setVisible(false);
         cancel.setText("Done");
+        //Updates the table in the main window
         parentcontroller.updatePrescriptionTable();
     }
     
+    //Closes the window
     @FXML
     protected void close(ActionEvent event) throws Exception {
         Node source = (Node) event.getSource();
@@ -142,11 +173,17 @@ public class AddPrescriptionWindowController implements Initializable {
         stage.close();
     }
     
+    //Initializes the window
+    //Primarily fills the prescriber combobox with names from the database
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Database db = new Database();
         db.Connect();
+        //Querying the database for doctors' last names
         List<List> rlist = db.dbQuery("Select LastName, userid FROM users WHERE usertype = 'Doctor'");
+        //Creates an array list containing two arraylists
+        //One with Doctors' lastnames
+        //The other with the corresponding doctor userid in the same index
         doctorname = new ArrayList();
         doctorname.add(0, new ArrayList());
         doctorname.add(1, new ArrayList());
@@ -157,11 +194,15 @@ public class AddPrescriptionWindowController implements Initializable {
             doctorname.get(0).add("Dr. " + (String) it2.next());
             doctorname.get(1).add(it2.next());
         }
+        //Adds the list of doctor names to the doctor combobox
         doctorbox.getItems().addAll(doctorname.get(0));
         errorlabel.setVisible(false);
         db.closeConnection();
     }
     
+    //Sets the data needed by the AddPrescriptionWindowController.
+    //This method is called and supplied with data from the action buttons
+    //for add, edit, and remove prescription from DoctorWindowController
     public void setData(DoctorWindowController d, boolean a, boolean e, boolean r, PrescriptionTable sp) {
         parentcontroller = d;
         addflag = a;
@@ -174,10 +215,12 @@ public class AddPrescriptionWindowController implements Initializable {
             selectedprescription = sp;
         }
         
+        //Shows/hides buttons based on whether add, edit, or remove action was called
         add.setVisible(addflag);
         edit.setVisible(editflag);
         remove.setVisible(removeflag);
         
+        //If add flag, clear all the text fields and remove any selection in the doctor combobox
         if (addflag) {
             prescription.clear();
             treatment.clear();
@@ -187,6 +230,7 @@ public class AddPrescriptionWindowController implements Initializable {
             length.clear();
             doctorbox.setValue(null);
         }
+        //If edit flag, fill fields with information from the table selection from the Main Window
         if (editflag) {
             prescription.setText(selectedprescription.getPrescription());
             treatment.setText(selectedprescription.getTreatment());
@@ -197,6 +241,7 @@ public class AddPrescriptionWindowController implements Initializable {
             length.setText(selectedprescription.getLength());
             doctorbox.setValue(selectedprescription.getPrescriber());
         }
+        //If remove flag, hide all UI elements except a confirmation message
         if (removeflag) {
             prescription.setVisible(false);
             treatment.setVisible(false);

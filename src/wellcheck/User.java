@@ -1,3 +1,10 @@
+/*
+ * Class created by Kent Ehrlich
+ * 
+ * These are classes with limited utility, mostly to make it convenient
+ * to add or remove things from the database. They were created with the
+ * expectation they would have more utility than they currently do.
+ */
 package wellcheck;
 
 import java.util.Date;

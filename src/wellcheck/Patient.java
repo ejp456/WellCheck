@@ -1,6 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Class created by Kent Ehrlich
+ * 
+ * These are classes with limited utility, mostly to make it convenient
+ * to add or remove things from the database. They were created with the
+ * expectation they would have more utility than they currently do.
  */
 package wellcheck;
 
@@ -89,6 +92,9 @@ public class Patient extends User {
 
     }
 
+    //Instantiates an Patient object from data in the database,
+    //including prescriptions and health records associated with the patient.
+    //Extremely slow performance
     static Patient getRow(int userid) {
         Database db = new Database();
         db.Connect();
@@ -213,6 +219,7 @@ public class Patient extends User {
 
     }
 
+    //Modifies and existing entry in the database
     static void updateRow(Patient p) {
         User.updateRow(p);
 
@@ -236,6 +243,8 @@ public class Patient extends User {
 
     }
 
+    //Deletes a patient from the database, including all information from the
+    //users, Patient, Records, and Prescriptions tables
     static void deleteRow(Patient p) {
 
         Database db = new Database();

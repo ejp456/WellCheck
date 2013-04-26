@@ -1,3 +1,10 @@
+/*
+ * Class created by Kent Ehrlich
+ * 
+ * These are classes with limited utility, mostly to make it convenient
+ * to add or remove things from the database. They were created with the
+ * expectation they would have more utility than they currently do.
+ */
 package wellcheck;
 
 import java.util.Date;
@@ -54,6 +61,7 @@ public class Prescription {
         length = p.length;
     }
 
+    //Instantiates an object of the Prescription class from data in the database
     static Prescription getPrescriptionRow(int id) {
         Database db = new Database();
         db.Connect();
@@ -83,7 +91,7 @@ public class Prescription {
         db.Connect();
 
         //Checks to see if the object is already in the database
-        //Naively assumes that if p.id != 0 the object is already inside
+        //Naively assumes that if id != 0 the object is already inside
         if (p.getId() != 0) {
             return;
         }
@@ -110,7 +118,7 @@ public class Prescription {
         db.closeConnection();
     }
 
-    //This method deletes a user from the database by userid
+    //This method deletes a prescription from the database by id
     static void deletePrescriptionRow(Prescription p) {
         Database db = new Database();
         db.Connect();
