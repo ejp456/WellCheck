@@ -41,6 +41,7 @@ public class AddNewEntryController implements Initializable {
     @FXML private Label errorLabel;
     @FXML public static Label patientLabel;
     @FXML private javafx.scene.control.Button cancel;
+    @FXML private Text Comments;
     private String bloodPressure = " ";
     private String weight = " ";
     private String sugar = " ";
@@ -100,6 +101,10 @@ public class AddNewEntryController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
        String name = wellcheck.DoctorWindowController.getPatientName();
        patientLabel.setText(name);
+       if(wellcheck.DoctorWindowController.isNurse()){
+           enterComments.setVisible(false);
+           Comments.setVisible(false);
+       }
     }  
    
 }
