@@ -34,22 +34,6 @@ import javafx.stage.Stage;
  * @author Etai
  */
 public class DoctorWindowController implements Initializable, ControlledScreen {
-    @FXML public static ObservableList<PatientTable> patientList;
-    @FXML public static ObservableList<String> comboList;
-    @FXML public static ObservableList<dataTable> dataList;
-    @FXML private TableView patientTable;
-    @FXML private TableColumn patient, doctor;
-    @FXML public static ComboBox patientDropDown;
-    @FXML public static Label typeLabel;
-    @FXML public static Button editEntry;
-    @FXML public static Button addPatient;
-    @FXML public static Button editPatient;
-    @FXML public static Button addDep;
-    @FXML public static Button removePatient;
-    public static ArrayList<dataTable> data;
-    public static  Database db = new Database();
-    ScreenController myController;
-    
 
     @FXML
     public static ObservableList<PatientTable> patientList;
@@ -61,8 +45,33 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     private TableView patientTable;
     @FXML
     public static ComboBox patientDropDown;
+    @FXML
+    public static Label typeLabel;
+    @FXML
+    public static Button editEntry;
+    @FXML
+    public static Button addPatient;
+    @FXML
+    public static Button editPatient;
+    @FXML
+    public static Button addDep;
+    @FXML
+    public static Button removePatient;
     public static ArrayList<dataTable> data;
     public static Database db = new Database();
+    ScreenController myController;
+    //@FXML
+    //public static ObservableList<PatientTable> patientList;
+    //@FXML
+    //public static ObservableList<String> comboList;
+    //@FXML
+    //public static ObservableList<dataTable> dataList;
+    //@FXML
+    //private TableView patientTable;
+    //@FXML
+    //public static ComboBox patientDropDown;
+    //public static ArrayList<dataTable> data;
+    //public static Database db = new Database();
     @FXML
     private ObservableList<PrescriptionTable> prescriptionList;
     @FXML
@@ -74,7 +83,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     @FXML
     private Button addprescriptionbutton, editprescriptionbutton, removeprescriptionbutton;
     int selectedpatientid;
-    ScreenController myController;
+    //ScreenController myController;
 
     @FXML
     protected void addPatientButton(ActionEvent event) throws Exception {
@@ -134,78 +143,84 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         stage.setScene(scene);
         stage.show();
     }
-    @FXML protected void addDependant(ActionEvent event) throws Exception{
-       Parent root = FXMLLoader.load(getClass().getResource("DependantWindow.fxml"));
-       Stage stage = new Stage();
-       Scene scene = new Scene(root);
-       
-       stage.setScene(scene);
-       stage.show();
-    }
-    @FXML protected void dataComboBox(ActionEvent event){
-       db.Connect();
-       dataList.clear();
-       String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
-       String delims = "[ ]";
-       String[] tokens = name.split(delims);
-       data = db.dataTable(tokens[0], tokens[1]);
-       dataList.addAll(data);
-       db.closeConnection();
-    }  
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-       
-      
 
-        
+    @FXML
+    protected void addDependant(ActionEvent event) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("DependantWindow.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
     }
-    public static void userType(String user){
-        typeLabel.setText("Logged in as: "+user);
-    }
-    public static void addPatient(String p,String d){
-        patientList.add(new PatientTable(p,d));
-    }
-     public static void patientComboBox(String p){
-        comboList.add(p);
-    }
-    public static void refresh(){
-       db.Connect();
-       dataList.clear();
-       String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
-       String delims = "[ ]";
-       String[] tokens = name.split(delims);
-       data = db.dataTable(tokens[0], tokens[1]);
-       dataList.addAll(data);
-       db.closeConnection();
-    }
-    public static String getSelectedPatient() {
-        String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
+
+    @FXML
+    protected void dataComboBox(ActionEvent event) {
+        db.Connect();
+        dataList.clear();
+        String name = (String) patientDropDown.getSelectionModel().getSelectedItem();
         String delims = "[ ]";
         String[] tokens = name.split(delims);
-        ArrayList<dataTable> data = db.dataTable(tokens[0], tokens[1]);
+        data = db.dataTable(tokens[0], tokens[1]);
         dataList.addAll(data);
         db.closeConnection();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        db = new Database();
-        db.Connect();
-        patientDropDown.getItems().clear();
-
-        List<List> plist = db.dbQuery("SELECT FirstName, LastName, Patient.Doctor FROM users JOIN Patient ON (users.userid = Patient.userid)");
-        ArrayList<String> patientname = new ArrayList(plist.size());
-
-        for (int i = 0; i < plist.size(); i++) {
-            patientname.add((String) plist.get(i).get(0) + " " + (String) plist.get(i).get(1));
-        }
-
-        ObservableList<String> olist = FXCollections.observableList(patientname);
-        patientDropDown.getItems().addAll(olist);
-
         initializePrescriptionTab();
     }
+
+    public static void userType(String user) {
+        typeLabel.setText("Logged in as: " + user);
+    }
+
+    public static void addPatient(String p, String d) {
+        patientList.add(new PatientTable(p, d));
+    }
+
+    public static void patientComboBox(String p) {
+        comboList.add(p);
+    }
+
+    public static void refresh() {
+        db.Connect();
+        dataList.clear();
+        String name = (String) patientDropDown.getSelectionModel().getSelectedItem();
+        String delims = "[ ]";
+        String[] tokens = name.split(delims);
+        data = db.dataTable(tokens[0], tokens[1]);
+        dataList.addAll(data);
+        db.closeConnection();
+    }
+    /*public static String getSelectedPatient() {
+     String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
+     String delims = "[ ]";
+     String[] tokens = name.split(delims);
+     ArrayList<dataTable> data = db.dataTable(tokens[0], tokens[1]);
+     dataList.addAll(data);
+     db.closeConnection();
+     }*/
+
+    /*    @Override
+     public void initialize(URL url, ResourceBundle rb) {
+
+     db = new Database();
+     db.Connect();
+     patientDropDown.getItems().clear();
+
+     List<List> plist = db.dbQuery("SELECT FirstName, LastName, Patient.Doctor FROM users JOIN Patient ON (users.userid = Patient.userid)");
+     ArrayList<String> patientname = new ArrayList(plist.size());
+
+     for (int i = 0; i < plist.size(); i++) {
+     patientname.add((String) plist.get(i).get(0) + " " + (String) plist.get(i).get(1));
+     }
+
+     ObservableList<String> olist = FXCollections.observableList(patientname);
+     patientDropDown.getItems().addAll(olist);
+
+     initializePrescriptionTab();
+     }*/
 
     /*Kent's Methods
      * The Prescription tab methods starts here;
@@ -305,7 +320,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        
+
         //This gets the controller for the AddPrescriptionWindow, so that
         //it can be passed the DoctorWindowController's instance
         AddPrescriptionWindowController controller = fxmlLoader.<AddPrescriptionWindowController>getController();
@@ -403,23 +418,9 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     }
     /*End Prescription tab methods*/
 
+    @Override
     public void setScreenParent(ScreenController screenParent) {
         myController = screenParent;
-    }
-
-    public static void addPatient(String p, String d) {
-        patientList.add(new PatientTable(p, d));
-    }
-
-    public static void refresh() {
-        db.Connect();
-        dataList.clear();
-        String name = (String) patientDropDown.getSelectionModel().getSelectedItem();
-        String delims = "[ ]";
-        String[] tokens = name.split(delims);
-        data = db.dataTable(tokens[0], tokens[1]);
-        dataList.addAll(data);
-        db.closeConnection();
     }
 
     public static String getSelectedPatient() {
@@ -429,28 +430,28 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
 
         return tokens[0];
     }
-    public static boolean isNurse(){
-        String type = (String)typeLabel.getText();
+
+    public static boolean isNurse() {
+        String type = (String) typeLabel.getText();
         String delims = "[ ]";
         String[] tokens = type.split(delims);
-        if(tokens[tokens.length-1].equalsIgnoreCase("nurse")){
+        if (tokens[tokens.length - 1].equalsIgnoreCase("nurse")) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    public static void patientWindow(){
-       editEntry.setVisible(false);
-       addPatient.setVisible(false);
-       editPatient.setVisible(false);
-       addDep.setVisible(false);
-       removePatient.setVisible(false);
+
+    public static void patientWindow() {
+        editEntry.setVisible(false);
+        addPatient.setVisible(false);
+        editPatient.setVisible(false);
+        addDep.setVisible(false);
+        removePatient.setVisible(false);
     }
-    public static String getPatientName(){
-        String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
+
+    public static String getPatientName() {
+        String name = (String) patientDropDown.getSelectionModel().getSelectedItem();
         return name;
-    }
-     public void setScreenParent(ScreenController screenParent){
-        myController = screenParent;
     }
 }

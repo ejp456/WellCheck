@@ -56,9 +56,9 @@ public class SampleController implements Initializable, ControlledScreen {
                     db.patientTable();
                 }
                 else if(usertype.equalsIgnoreCase("Patient")){
-                     ArrayList plist = db.dbQuery("SELECT FirstName, LastName FROM users Where username =\""+user+"\"");
+                     List<List> plist = db.dbQuery("SELECT FirstName, LastName FROM users Where username =\""+user+"\"");
                      //patient = (String) ((ArrayList) plist.get(0)).get(0) + " " + (String) ((ArrayList) plist.get(0)).get(1);
-                     db.patientScreenTable((String) ((ArrayList) plist.get(0)).get(0), (String) ((ArrayList) plist.get(0)).get(1));
+                     db.patientScreenTable((String) (plist.get(0)).get(0), (String) (plist.get(0)).get(1));
                      wellcheck.DoctorWindowController.patientWindow();
                      myController.setScreen(WellCheck.screenID2);
                 }else{
