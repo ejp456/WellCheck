@@ -259,7 +259,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-
+        
         //This gets the controller for the AddPrescriptionWindow, so that
         //it can be passed the DoctorWindowController's instance
         AddPrescriptionWindowController controller = fxmlLoader.<AddPrescriptionWindowController>getController();
