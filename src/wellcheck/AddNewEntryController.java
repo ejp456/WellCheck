@@ -103,6 +103,9 @@ public class AddNewEntryController implements Initializable {
        if(wellcheck.DoctorWindowController.isNurse()){
            enterComments.setVisible(false);
            Comments.setVisible(false);
+       }else{
+           enterComments.setVisible(true);
+           Comments.setVisible(true);
        }
     }  
    
