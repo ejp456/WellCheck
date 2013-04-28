@@ -47,7 +47,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     @FXML public static Button editEntry,addPatient,editPatient,addDep,removePatient,addprescriptionbutton, editprescriptionbutton, removeprescriptionbutton;
     @FXML private ObservableList<PrescriptionTable> prescriptionList;
     @FXML private TableView<PrescriptionTable> prescriptionTable;
-    @FXML private Label prescriptionerror;
+    @FXML private static Label prescriptionerror;
     public static ArrayList<dataTable> data;
     public static  Database db = new Database();
     private ResultSet rs;
@@ -167,12 +167,15 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
             return false;
         }
     }
-    public static void patientWindow(){
-       editEntry.setVisible(false);
-       addPatient.setVisible(false);
-       editPatient.setVisible(false);
-       addDep.setVisible(false);
-       removePatient.setVisible(false);
+    public static void buttonToggle(boolean bool){
+       editEntry.setVisible(bool);
+       addPatient.setVisible(bool);
+       editPatient.setVisible(bool);
+       addDep.setVisible(bool);
+       removePatient.setVisible(bool);
+       addprescriptionbutton.setVisible(bool);
+       editprescriptionbutton.setVisible(bool);
+       removeprescriptionbutton.setVisible(bool);
     }
     public static String getPatientName(){
         String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
@@ -185,17 +188,8 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
 * The Prescription tab methods starts here;
 */
     @FXML
-    protected void initializePrescriptionTab() {
-        db.Connect();
-        List<List> rlist = db.dbQuery("Select FirstName, LastName FROM users WHERE usertype = 'Patient'");
-        ArrayList<String> patientname = new ArrayList();
-        Iterator it1 = rlist.iterator();
-        Iterator it2;
-        while (it1.hasNext()) {
-            it2 = ((List) it1.next()).iterator();
-            patientname.add((String) it2.next() + " " + (String) it2.next());
-        }
-        prescriptioncombobox.getItems().addAll(patientname);
+    public static void initializePrescriptionTab() {
+        prescriptioncombobox.getItems().addAll(comboList);
         prescriptionerror.setVisible(false);
         addprescriptionbutton.setDisable(true);
         editprescriptionbutton.setDisable(true);
