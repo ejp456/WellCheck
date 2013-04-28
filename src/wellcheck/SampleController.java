@@ -45,6 +45,7 @@ public class SampleController implements Initializable, ControlledScreen {
         String pass = password.getText().toString();
         boolean test = db.userExist(user);
         String usertype = db.getUserType(user, pass);
+        System.out.println(usertype);
         if(test){
         System.out.println("User Exists");
         test = db.checkPassword(user, pass);
