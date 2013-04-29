@@ -31,6 +31,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -181,14 +182,14 @@ public class EditPatientInformationWindows implements Initializable {
         String lName = tokens[1];
         
 
-        ArrayList dbfName = db.dbQuery("Select FirstName FROM users WHERE usertype = 'Patient'");
-        ArrayList dblName = db.dbQuery("Select LastName FROM users WHERE usertype = 'Patient'");
+        List dbfName = db.dbQuery("Select FirstName FROM users WHERE usertype = 'Patient'");
+        List dblName = db.dbQuery("Select LastName FROM users WHERE usertype = 'Patient'");
 
         
         
-        int k = match(fName, lName, dbfName, dblName);
+        int k = match(fName, lName, (ArrayList) dbfName, (ArrayList) dblName);
 
-        ArrayList plist3 = db.dbQuery("Select userid FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
+        List plist3 = db.dbQuery("Select userid FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
         
         String userId1 = plist3.toString();
         //System.out.println("userID1 is " + userId1);
@@ -208,8 +209,8 @@ public class EditPatientInformationWindows implements Initializable {
         
         
         
-        ArrayList plist1 = db.dbQuery("Select * FROM Patient WHERE userid = \""+userId+"\"");// WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");//");// WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
-        ArrayList plist2 = db.dbQuery("Select DOB FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
+        List plist1 = db.dbQuery("Select * FROM Patient WHERE userid = \""+userId+"\"");// WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");//");// WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
+        List plist2 = db.dbQuery("Select DOB FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
         
         //Select FirstName FROM users WHERE userid = \""+id+"\"");
         
@@ -221,7 +222,7 @@ public class EditPatientInformationWindows implements Initializable {
         
         //System.out.println("++++" + info);
         
-        String tempDOB = getInfoDOB(plist2);//ArrayList + int
+        String tempDOB = getInfoDOB((ArrayList) plist2);//ArrayList + int
         String temp;
         
         getDOB.clear();
@@ -324,7 +325,7 @@ public class EditPatientInformationWindows implements Initializable {
         /////////////////////////////////////////////////////////
         
         //System.out.println("user name is " + fName + " " + lName);
-        ArrayList plist2 = db.dbQuery("Select userid FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
+        List plist2 = db.dbQuery("Select userid FROM users WHERE FirstName = \""+fName+"\" AND LastName=\""+lName+"\"");
         
         
         
@@ -386,11 +387,11 @@ public class EditPatientInformationWindows implements Initializable {
 
         
         
-        ArrayList plist = db.dbQuery("Select FirstName, LastName FROM users WHERE usertype = 'Patient'");
+        List plist = db.dbQuery("Select FirstName, LastName FROM users WHERE usertype = 'Patient'");
         ArrayList<String> patientname = new ArrayList(plist.size());
     
         for(int i = 0; i < plist.size(); i++){
-            patientname.add((String) ((ArrayList) plist.get(i)).get(0) + " " + (String) ((ArrayList) plist.get(i)).get(1));
+            patientname.add((String) ((List) plist.get(i)).get(0) + " " + (String) ((List) plist.get(i)).get(1));
         }
         
         ObservableList<String> olist = FXCollections.observableList(patientname);
