@@ -281,6 +281,18 @@ public void initializePatient(String firstName, String lastName, String dateOfBi
         String insuranceProvider, String memberId, String groupNumber, String assignedDoctor, String userId) {
     String empty = "empty";
     try {
+    statement = (PreparedStatement) con.prepareStatement("SELECT userid FROM users");
+    rs = statement.executeQuery();
+    while(rs.next()){
+        userId = rs.getString(1);
+    }
+    if(userId.equals(" ")){
+        userId = "1";
+    }else{
+    int temp = Integer.parseInt(userId);
+    temp++;
+    userId = Integer.toString(temp);
+    }
     statement = (PreparedStatement) con.prepareStatement(
             "INSERT INTO `1_0362c2e_3`.`Patient` (`userid`, `Address1`, `Address2`, `City`, `State`, "
             + "`ZipCode`, `PhoneNumber`, `InsuranceProvider`, `memberid`, `groupid`, `DependantTo`, `Doctor`) "
