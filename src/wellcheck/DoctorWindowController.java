@@ -66,6 +66,9 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     }
     @FXML protected void logOut(ActionEvent event){
         patientList.clear();
+        comboList.clear();
+        dataList.clear();
+        prescriptioncombobox.getItems().clear();
         myController.setScreen(WellCheck.screenID1);
     }
     @FXML protected void editPatient(ActionEvent event) throws Exception{
