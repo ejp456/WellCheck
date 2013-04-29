@@ -5,15 +5,14 @@
 package wellcheck;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import static wellcheck.DoctorWindowController.patientList;
 import static wellcheck.DoctorWindowController.comboList;
@@ -39,8 +38,8 @@ public class AddPatientWindowController implements Initializable {
     @FXML private TextField enterInsuranceProvider;
     @FXML private TextField enterMemberId;
     @FXML private TextField enterGroupNumber;
-    @FXML private TextField enterAssignedDoctor;
     @FXML private TextField enterUserId;
+    @FXML private ComboBox doctorSelection;
     @FXML private javafx.scene.control.Button cancel;
     private String firstName;
     private String lastName;
@@ -54,9 +53,10 @@ public class AddPatientWindowController implements Initializable {
     private String insuranceProvider;
     private String memberId;
     private String groupNumber;
-    private String assignedDoctor;
+    private String assignedDoctorId;
+    private String assignedDoctorFirst;
+    private String assignedDoctorLast;
     private String userId;
-    private String userType = "Patient";
     private Database db = new Database();
     
     
@@ -74,15 +74,17 @@ public class AddPatientWindowController implements Initializable {
         insuranceProvider = enterInsuranceProvider.getText();
         memberId = enterMemberId.getText();
         groupNumber = enterGroupNumber.getText();
-        assignedDoctor = enterAssignedDoctor.getText();
+        assignedDoctorFirst = getDoctorFirst();
+        assignedDoctorLast = getDoctorLast();
         userId = enterUserId.getText();
         
         db.Connect();
+        assignedDoctorId = db.getId(assignedDoctorFirst);
         db.initializePatient(firstName, lastName, dateOfBirth, address1, address2, city, state, zip,
-                phoneNumber, insuranceProvider, memberId, groupNumber, assignedDoctor, userId);
+                phoneNumber, insuranceProvider, memberId, groupNumber, assignedDoctorId, userId);
         
-        patientList.add(new PatientTable(firstName + " " + lastName, db.getDoctorFirst(assignedDoctor) + " " + db.getDoctorLast(assignedDoctor)));
-        comboList.add(firstName+" "+lastName);
+        patientList.add(new PatientTable(firstName + " " + lastName, assignedDoctorFirst + " " + assignedDoctorLast));
+        comboList.add(firstName + " " + lastName);
         Stage stage = (Stage) cancel.getScene().getWindow();
         stage.close();
     }
@@ -92,8 +94,38 @@ public class AddPatientWindowController implements Initializable {
         stage.close();
     }
     
+    private String getDoctorFirst() {
+        String name = (String) doctorSelection.getSelectionModel().getSelectedItem();
+        String delims = "[ ]";
+        String[] tokens = name.split(delims);
+        
+        return tokens[0];
+    }
+    
+    private String getDoctorLast() {
+        String name = (String) doctorSelection.getSelectionModel().getSelectedItem();
+        String delims = "[ ]";
+        String[] tokens = name.split(delims);
+        
+        return tokens[1];
+    }
+    
+    private void initializeDoctorSelection() {
+        db.Connect();
+        List<List> rlist = db.dbQuery("Select FirstName, LastName FROM users WHERE usertype = 'Doctor'");
+        ArrayList<String> doctorList = new ArrayList();
+        Iterator it1 = rlist.iterator();
+        Iterator it2;
+        while (it1.hasNext()) {
+            it2 = ((List) it1.next()).iterator();
+            doctorList.add((String) it2.next() + " " + (String) it2.next());
+        }
+        doctorSelection.getItems().clear();
+        doctorSelection.getItems().addAll(doctorList);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        initializeDoctorSelection();
     }    
 }
