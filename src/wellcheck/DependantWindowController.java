@@ -22,9 +22,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Kent
- */
+*
+* @author Kent
+*/
 public class DependantWindowController implements Initializable {
 
     @FXML

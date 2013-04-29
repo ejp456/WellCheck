@@ -2,43 +2,39 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-
-
-
-
-
-
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="373.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.EditPatientInformationWindows">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="458.0" prefWidth="373.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.EditPatientInformationWindows">
   <children>
-      
-    <Button fx:id="saveInformation" layoutX="28.0" layoutY="516.0" mnemonicParsing="false" prefWidth="151.0" text="Save Information" onAction="#addDataPatient"/>
-    <Button fx:id="cancel" layoutX="237.0" layoutY="516.0" mnemonicParsing="false" prefWidth="67.0" text="Cancel" onAction="#cancelButton"/>
-    <Label layoutX="28.0" layoutY="82.0" prefHeight="30.0" prefWidth="106.0" text="First Name" />
-    <Label layoutX="28.0" layoutY="120.0" prefHeight="30.0" prefWidth="106.0" text="Last Name" />
-    <Label layoutX="28.0" layoutY="158.0" prefHeight="30.0" prefWidth="106.0" text="Date of Birth" />
-    <Label layoutX="28.0" layoutY="200.0" prefHeight="30.0" prefWidth="106.0" text="Address" />
-    <Label layoutX="28.0" layoutY="285.0" prefHeight="30.0" prefWidth="106.0" text="Phone Number" />
-    <Label layoutX="28.0" layoutY="332.0" prefHeight="30.0" prefWidth="118.0" text="Insurance Provider" />
-    <Label layoutX="28.0" layoutY="371.0" prefHeight="30.0" prefWidth="118.0" text="Member ID" />
-    <Label layoutX="28.0" layoutY="414.0" prefHeight="30.0" prefWidth="118.0" text="Group Number" />
-    <Label layoutX="28.0" layoutY="458.0" prefHeight="30.0" prefWidth="118.0" text="Assigned Doctor" />
-    <TextField fx:id="getfirstName" layoutX="146.0" layoutY="86.0" prefWidth="200.0" />
-    <TextField fx:id="getlastName" layoutX="146.0" layoutY="128.0" prefWidth="200.0" />
-    <TextField fx:id="getday" layoutX="146.0" layoutY="166.0" prefWidth="40.5" promptText="dd" />
-    <TextField fx:id="getmonth" layoutX="196.0" layoutY="166.0" prefWidth="41.0" promptText="mm" />
-    <TextField fx:id="getyear" layoutX="255.0" layoutY="166.0" prefWidth="91.0" promptText="yyyy" />
-    <TextField fx:id="getaddress1" layoutX="146.0" layoutY="208.0" prefWidth="200.0" />
-    <TextField fx:id="getaddress2" layoutX="146.0" layoutY="241.0" prefWidth="200.0" />
-    <TextField fx:id="getphoneNumber" layoutX="146.0" layoutY="289.0" prefWidth="200.0" />
-    <TextField fx:id="getInsuranceProvider" layoutX="146.0" layoutY="336.0" prefWidth="200.0" />
-    <TextField fx:id="getmemberID" layoutX="146.0" layoutY="379.0" prefWidth="200.0" />
-    <TextField fx:id="getgroupNumber" layoutX="146.0" layoutY="418.0" prefWidth="200.0" />
-    <TextField fx:id="getassignedDoctor" layoutX="146.0" layoutY="462.0" prefWidth="200.0" />
+    <Button fx:id="set" layoutX="31.0" layoutY="406.0" mnemonicParsing="false" onAction="#setPatient" text="Set" />
+    <Button fx:id="saveInformation" layoutX="111.0" layoutY="406.0" mnemonicParsing="false" onAction="#addDataPatient" prefWidth="151.0" text="Save Information" />
+    <Button fx:id="cancel" layoutX="279.0" layoutY="406.0" mnemonicParsing="false" onAction="#cancelButton" prefWidth="67.0" text="Cancel" />
+    <Label layoutX="28.0" layoutY="48.0" prefHeight="30.0" prefWidth="106.0" text="Date of Birth" />
+    <Label layoutX="28.0" layoutY="90.0" prefHeight="30.0" prefWidth="106.0" text="Address" />
+    <Label layoutX="28.0" layoutY="175.0" prefHeight="30.0" prefWidth="106.0" text="Phone Number" />
+    <Label layoutX="28.0" layoutY="222.0" prefHeight="30.0" prefWidth="118.0" text="Insurance Provider" />
+    <Label layoutX="28.0" layoutY="261.0" prefHeight="30.0" prefWidth="118.0" text="Member ID" />
+    <Label layoutX="28.0" layoutY="304.0" prefHeight="30.0" prefWidth="118.0" text="Group Number" />
+    <Label layoutX="28.0" layoutY="348.0" prefHeight="30.0" prefWidth="118.0" text="Assigned Doctor ID" />
+    <Label layoutX="45.0" layoutY="15.0" text="Name" />
+    <TextField fx:id="getaddress1" layoutX="146.0" layoutY="98.0" prefWidth="200.0" />
+    <TextField fx:id="getaddress2" layoutX="146.0" layoutY="131.0" prefWidth="200.0" />
+    <TextField fx:id="getphoneNumber" layoutX="146.0" layoutY="179.0" prefWidth="200.0" />
+    <TextField fx:id="getInsuranceProvider" layoutX="146.0" layoutY="226.0" prefWidth="200.0" />
+    <TextField fx:id="getmemberID" layoutX="146.0" layoutY="269.0" prefWidth="200.0" />
+    <TextField fx:id="getgroupNumber" layoutX="146.0" layoutY="308.0" prefWidth="200.0" />
+    <TextField fx:id="getassignedDoctor" layoutX="146.0" layoutY="352.0" prefWidth="200.0" />
+    <TextField fx:id="getDOB" layoutX="146.0" layoutY="52.0" prefWidth="200.0" promptText="YYYY/MM/DD" />
+    <TextField fx:id="getcity" layoutX="146.0" layoutY="153.0" prefWidth="62.5" promptText="city" />
+    <TextField fx:id="getstate" layoutX="216.0" layoutY="153.0" prefWidth="63.0" promptText="state" />
+    <TextField fx:id="getzipcode" layoutX="293.0" layoutY="153.0" prefWidth="53.0" promptText="zipcode" />
+    <ComboBox fx:id="combo" layoutX="146.0" layoutY="15.0" prefHeight="21.0" prefWidth="194.0" />
+    
+    
   </children>
 </AnchorPane>

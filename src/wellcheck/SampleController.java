@@ -53,6 +53,7 @@ public class SampleController implements Initializable, ControlledScreen {
         String pass = password.getText().toString();
         boolean test = db.userExist(user);
         String usertype = db.getUserType(user, pass);
+        System.out.println(usertype);
         if(test){
         System.out.println("User Exists");
         test = db.checkPassword(user, pass);
@@ -62,16 +63,22 @@ public class SampleController implements Initializable, ControlledScreen {
                 if(usertype.equalsIgnoreCase("Nurse")){
                     System.out.println("Password is correct");
                     db.patientTable();
+                    wellcheck.DoctorWindowController.buttonToggle(true);
+                    wellcheck.DoctorWindowController.initializePrescriptionTab();
                 }
                 else if(usertype.equalsIgnoreCase("Patient")){
                      List<List> plist = db.dbQuery("SELECT FirstName, LastName FROM users Where username =\""+user+"\"");
                      //patient = (String) ((ArrayList) plist.get(0)).get(0) + " " + (String) ((ArrayList) plist.get(0)).get(1);
-                     db.patientScreenTable((String) (plist.get(0)).get(0), (String) (plist.get(0)).get(1));
-                     wellcheck.DoctorWindowController.patientWindow();
+                     db.patientScreenTable((String) ((ArrayList) plist.get(0)).get(0), (String) ((ArrayList) plist.get(0)).get(1));
+                     wellcheck.DoctorWindowController.buttonToggle(false);
+                     wellcheck.DoctorWindowController.initializePrescriptionTab();
+                     myController.setScreen(WellCheck.screenID2);
                 }else{
                 //if username and password is correct program moves to main screen
                     System.out.println("Password is correct");
                     db.patientTable();
+                    wellcheck.DoctorWindowController.buttonToggle(true);
+                    wellcheck.DoctorWindowController.initializePrescriptionTab();
                     }
                 //Kent's additions
                 //Sets data in the DWC class to appropriate values based on login
