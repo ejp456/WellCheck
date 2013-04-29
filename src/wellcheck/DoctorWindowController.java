@@ -13,7 +13,6 @@ import java.util.Iterator;
 import java.sql.ResultSet;
 import java.util.Date;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -180,6 +179,8 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     /*Kent's Methods
      * The Prescription tab methods starts here;
      * 
+     * updatePrescriptionTab refreshes the prescription tab whenever a change
+     * happens that modifies its data. Primarily happens on login.
      */
     @FXML
     protected void updatePrescriptionTab() {
@@ -445,6 +446,12 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         stage.show();
     }
 
+    /*This method brings up the Account subwindow, but with the change password
+     * pane visible.
+     * 
+     * This method shares boilerplate code with the other Account Subwindow
+     * methods.
+     */
     @FXML
     private void changepassword() throws Exception {
         URL location = getClass().getResource("AccountSubwindow.fxml");
@@ -473,6 +480,12 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         stage.show();
     }
 
+    /*This method brings up the Account subwindow, but with the change challenge question
+     * pane visible.
+     * 
+     * This method shares boilerplate code with the other Account Subwindow
+     * methods.
+     */
     @FXML
     private void changequestion() throws Exception {
         URL location = getClass().getResource("AccountSubwindow.fxml");
