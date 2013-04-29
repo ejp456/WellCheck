@@ -21,16 +21,19 @@ public class WellCheck extends Application {
     public static String screenFile1 = "Sample.fxml";
     public static String screenID2 = "DoctorWindow";
     public static String screenFile2 = "DoctorWindow.fxml";
-    public static String screenID3 = "PatientWindow";
-    public static String screenFile3 = "PatientWindow.fxml";
     
     @Override
     public void start(Stage stage) throws Exception {
         ScreenController mainContainer = new ScreenController();
         //adds screens to GUI
         mainContainer.loadScreen(WellCheck.screenID1, WellCheck.screenFile1);
-        mainContainer.loadScreen(WellCheck.screenID2, WellCheck.screenFile2);
-        mainContainer.loadScreen(WellCheck.screenID3, WellCheck.screenFile3);
+         //Kent's change:
+         //This method call is disabled. The loading of DoctorWindow now
+         //happens in the SampleController class, so that it's possible to
+         //set data for the DoctorWindowController instance on login,
+         //without resorting to setting the relevant data members to public
+         //static.
+        //mainContainer.loadScreen(WellCheck.screenID2, WellCheck.screenFile2);
         
         mainContainer.setScreen(WellCheck.screenID1);
         

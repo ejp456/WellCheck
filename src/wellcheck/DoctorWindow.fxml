@@ -7,11 +7,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import wellcheck.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.DoctorWindowController">
     <children>
-        <TabPane layoutX="14.0" layoutY="45.0" prefHeight="342.0" prefWidth="572.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane fx:id="tabpane" layoutX="14.0" layoutY="45.0" prefHeight="342.0" prefWidth="572.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab fx:id="patientstab" text="Patients">
                     <content>
@@ -142,6 +143,24 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <Hyperlink id="logOut" layoutX="537.0" layoutY="9.0" onAction="#logOut" text="Log Out" textFill="#1400ff" underline="true" />
+        <AnchorPane fx:id="accountpane" prefHeight="342.0" prefWidth="572.0" visible="false" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="45.0">
+            <children>
+                <Button layoutX="202.0" layoutY="155.0" mnemonicParsing="false" onAction="#edituserinformation" prefWidth="168.0" text="Edit Information" />
+                <Button layoutX="202.0" layoutY="182.0" mnemonicParsing="false" onAction="#changepassword" prefWidth="168.0" text="Change Password" />
+                <Button layoutX="202.0" layoutY="245.0" mnemonicParsing="false" onAction="#returntotabview" prefWidth="168.0" text="Return to Main Screen" />
+                <Button layoutX="202.0" layoutY="209.0" mnemonicParsing="false" onAction="#changequestion" text="Change Challenge Question" />
+                <Label layoutX="241.0" layoutY="68.0" text="Name:" />
+                <Label layoutX="206.0" layoutY="102.0" text="Date of Birth:" />
+                <Label fx:id="namelabel" layoutX="296.0" layoutY="68.0" />
+                <Label fx:id="doblabel" layoutX="296.0" layoutY="102.0" />
+            </children>
+        </AnchorPane>
+        <Label fx:id="typeLabel" layoutX="14.0" layoutY="14.0" />
+        <Hyperlink id="logOut" fx:id="logoutlink" layoutX="537.0" layoutY="22.0" onAction="#logOut" text="Log Out" underline="true">
+            <textFill>
+                <Color blue="1.000" green="0.000" red="0.078" fx:id="x1" />
+            </textFill>
+        </Hyperlink>
+        <Hyperlink fx:id="accountlink" layoutX="537.0" layoutY="3.0" onAction="#gotoaccountpage" text="Account" textFill="$x1" underline="true" />
     </children>
 </AnchorPane>

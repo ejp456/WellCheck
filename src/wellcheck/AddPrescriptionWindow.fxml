@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TitledPane alignment="CENTER" animated="false" minWidth="220.0" prefHeight="200.0" prefWidth="220.0" text="Add Prescription" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.AddPrescriptionWindowController">
+<TitledPane fx:id="addprescriptiontitle" alignment="CENTER" animated="false" minWidth="220.0" prefHeight="200.0" prefWidth="220.0" text="Add Prescription" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.AddPrescriptionWindowController">
   <content>
     <AnchorPane id="AnchorPane" prefHeight="176.0" prefWidth="220.0">
       <children>

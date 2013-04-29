@@ -27,6 +27,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -60,18 +63,16 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     public static ArrayList<dataTable> data;
     public static Database db = new Database();
     ScreenController myController;
-    //@FXML
-    //public static ObservableList<PatientTable> patientList;
-    //@FXML
-    //public static ObservableList<String> comboList;
-    //@FXML
-    //public static ObservableList<dataTable> dataList;
-    //@FXML
-    //private TableView patientTable;
-    //@FXML
-    //public static ComboBox patientDropDown;
-    //public static ArrayList<dataTable> data;
-    //public static Database db = new Database();
+    /*
+     * Kent's fields. Note how they are all not public and static, in accordance
+     * with good object oriented programming practices.
+     */
+    @FXML
+    private TabPane tabpane;
+    @FXML
+    private AnchorPane accountpane;
+    @FXML
+    private Hyperlink logoutlink, accountlink;
     @FXML
     private ObservableList<PrescriptionTable> prescriptionList;
     @FXML
@@ -79,11 +80,12 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     @FXML
     private TableView<PrescriptionTable> prescriptionTable;
     @FXML
-    private Label prescriptionerror;
+    private Label prescriptionerror, namelabel, doblabel;
     @FXML
     private Button addprescriptionbutton, editprescriptionbutton, removeprescriptionbutton;
     int selectedpatientid;
-    //ScreenController myController;
+    int currentuserid;
+    String currentusertype;
 
     @FXML
     protected void addPatientButton(ActionEvent event) throws Exception {
@@ -98,7 +100,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     @FXML
     protected void logOut(ActionEvent event) {
         patientList.clear();
-        myController.setScreen(WellCheck.screenID1);
+        myController.setScreen("login");
     }
 
     @FXML
@@ -168,7 +170,6 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initializePrescriptionTab();
     }
 
     public static void userType(String user) {
@@ -193,44 +194,22 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         dataList.addAll(data);
         db.closeConnection();
     }
-    /*public static String getSelectedPatient() {
-     String name = (String)patientDropDown.getSelectionModel().getSelectedItem();
-     String delims = "[ ]";
-     String[] tokens = name.split(delims);
-     ArrayList<dataTable> data = db.dataTable(tokens[0], tokens[1]);
-     dataList.addAll(data);
-     db.closeConnection();
-     }*/
-
-    /*    @Override
-     public void initialize(URL url, ResourceBundle rb) {
-
-     db = new Database();
-     db.Connect();
-     patientDropDown.getItems().clear();
-
-     List<List> plist = db.dbQuery("SELECT FirstName, LastName, Patient.Doctor FROM users JOIN Patient ON (users.userid = Patient.userid)");
-     ArrayList<String> patientname = new ArrayList(plist.size());
-
-     for (int i = 0; i < plist.size(); i++) {
-     patientname.add((String) plist.get(i).get(0) + " " + (String) plist.get(i).get(1));
-     }
-
-     ObservableList<String> olist = FXCollections.observableList(patientname);
-     patientDropDown.getItems().addAll(olist);
-
-     initializePrescriptionTab();
-     }*/
 
     /*Kent's Methods
      * The Prescription tab methods starts here;
      * 
      */
     @FXML
-    protected void initializePrescriptionTab() {
+    protected void updatePrescriptionTab() {
         db.Connect();
         //Queries the database for patient names
-        List<List> rlist = db.dbQuery("Select FirstName, LastName FROM users WHERE usertype = 'Patient'");
+        List<List> rlist;
+        if (currentusertype.equals("Doctor") || currentusertype.equals("Nurse")) {
+            rlist = db.dbQuery("Select FirstName, LastName FROM users WHERE usertype = 'Patient'");
+        } else {
+            rlist = db.dbQuery("SELECT FirstName, LastName FROM users WHERE userid = " + currentuserid + " UNION SELECT FirstName, LastName FROM users, Patient WHERE users.userid = Patient.userid AND Patient.DependantTo = " + currentuserid);
+        }
+
         ArrayList<String> patientname = new ArrayList();
         Iterator it1 = rlist.iterator();
         Iterator it2;
@@ -240,6 +219,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         }
 
         //Fills the combobox with patient names
+        prescriptioncombobox.getItems().clear();
         prescriptioncombobox.getItems().addAll(patientname);
         prescriptionerror.setVisible(false);
         addprescriptionbutton.setDisable(true);
@@ -277,18 +257,16 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
      * patient is selected, or the prescription information is added, edited, or removed.
      */
     void updatePrescriptionTable() {
-        Database db = new Database();
         db.Connect();
         List<List> list = db.dbQuery("SELECT Prescriptions.*, users.LastName FROM Prescriptions, users WHERE Prescriptions.Patient = " + selectedpatientid + " AND Prescriptions.Doctor = users.userid");
         List<PrescriptionTable> templist = new ArrayList();
         prescriptionList.clear();
 
+        boolean empty = list.isEmpty();
+
         if (list.isEmpty()) {
             prescriptionerror.setText("Patient has no prescriptions.");
             prescriptionerror.setVisible(true);
-            addprescriptionbutton.setDisable(false);
-            editprescriptionbutton.setDisable(true);
-            removeprescriptionbutton.setDisable(true);
         } else {
             for (int i = 0; i < list.size(); i++) {
                 PrescriptionTable temppt = new PrescriptionTable(
@@ -302,14 +280,27 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
             }
             prescriptionList.addAll(templist);
             prescriptionerror.setVisible(false);
-            addprescriptionbutton.setDisable(false);
-            editprescriptionbutton.setDisable(false);
-            removeprescriptionbutton.setDisable(false);
+        }
+
+        if (!currentusertype.equals("Patient")) {
+            if (empty) {
+                addprescriptionbutton.setDisable(false);
+                editprescriptionbutton.setDisable(true);
+                removeprescriptionbutton.setDisable(true);
+            } else {
+                addprescriptionbutton.setDisable(false);
+                editprescriptionbutton.setDisable(false);
+                removeprescriptionbutton.setDisable(false);
+            }
         }
 
         db.closeConnection();
     }
 
+    /*This method brings up the Add Prescription Window.
+     * It shares boilerplate code with all the other Prescription window
+     * methods.
+     */
     @FXML
     protected void addPrescription() throws Exception {
         URL location = getClass().getResource("AddPrescriptionWindow.fxml");
@@ -339,6 +330,11 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         stage.show();
     }
 
+    /* This method brings up the Add Prescription Window, modified for editing
+     * prescription information.
+     * 
+     * It shares boilerplate code with the other Prescription Window methods.
+     */
     @FXML
     protected void editPrescription() throws Exception {
         //Gets prescription selection from table;
@@ -375,6 +371,11 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         }
     }
 
+    /* This method brings up the Add Prescription Window, modified to remove
+     * prescriptions.
+     * 
+     * It shares boilerplate code with the other Add Prescription Window methods.
+     */
     @FXML
     protected void removePrescription() throws Exception {
         //Gets prescription selection from table;
@@ -410,13 +411,152 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
             stage.show();
         }
     }
+    /*End Prescription tab methods*/
 
+    /*Begin Account Page Methods
+     * Written by Kent
+     */
+    /*This method switches the tabbed view to the account page.*/
+    @FXML
+    private void gotoaccountpage() {
+        tabpane.setVisible(false);
+        accountpane.setVisible(true);
+        accountlink.setVisible(false);
+        logoutlink.setVisible(false);
+        
+        updateAccountPage();
+        db.closeConnection();
+
+    }
+
+    /*This method brings up the Account subwindow, but with the edit information
+     * pane visible.
+     * 
+     * This method shares boilerplate code with the other Account Subwindow
+     * methods.
+     */
+    @FXML
+    private void edituserinformation() throws Exception {
+        URL location = getClass().getResource("AccountSubwindow.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(location);
+        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+        Parent root = (Parent) fxmlLoader.load(location.openStream());
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
+        //This gets the controller for the Account Subwindow, so that
+        //it can be passed the DoctorWindowController's instance
+        AccountSubwindowController controller = fxmlLoader.<AccountSubwindowController>getController();
+
+        //Flags passed to AddPrescriptionWindowController based on whether
+        //the add, edit, or remove buttons are pushedboolean addflag, editflag, removeflag;
+        boolean editflag, passwordflag, questionflag;
+        editflag = true;
+        passwordflag = false;
+        questionflag = false;
+
+        //Passing all the data to the AddPrescriptionWindowController
+        controller.setData(getDoctorWindowController(), editflag, passwordflag, questionflag, currentuserid);
+
+        stage.show();
+    }
+
+    @FXML
+    private void changepassword() throws Exception {
+        URL location = getClass().getResource("AccountSubwindow.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(location);
+        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+        Parent root = (Parent) fxmlLoader.load(location.openStream());
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
+        //This gets the controller for the Account Subwindow, so that
+        //it can be passed the DoctorWindowController's instance
+        AccountSubwindowController controller = fxmlLoader.<AccountSubwindowController>getController();
+
+        //Flags passed to AddPrescriptionWindowController based on whether
+        //the add, edit, or remove buttons are pushedboolean addflag, editflag, removeflag;
+        boolean editflag, passwordflag, questionflag;
+        editflag = false;
+        passwordflag = true;
+        questionflag = false;
+
+        //Passing all the data to the AddPrescriptionWindowController
+        controller.setData(getDoctorWindowController(), editflag, passwordflag, questionflag, currentuserid);
+
+        stage.show();
+    }
+
+    @FXML
+    private void changequestion() throws Exception {
+        URL location = getClass().getResource("AccountSubwindow.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(location);
+        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+        Parent root = (Parent) fxmlLoader.load(location.openStream());
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
+        //This gets the controller for the Account Subwindow, so that
+        //it can be passed the DoctorWindowController's instance
+        AccountSubwindowController controller = fxmlLoader.<AccountSubwindowController>getController();
+
+        //Flags passed to AddPrescriptionWindowController based on whether
+        //the add, edit, or remove buttons are pushedboolean addflag, editflag, removeflag;
+        boolean editflag, passwordflag, questionflag;
+        editflag = false;
+        passwordflag = false;
+        questionflag = true;
+
+        //Passing all the data to the AddPrescriptionWindowController
+        controller.setData(getDoctorWindowController(), editflag, passwordflag, questionflag, currentuserid);
+
+        stage.show();
+    }
+
+    /* This method refreshes the account page information in the event that
+     * the underlying database information changes. It should only change in
+     * response to action taken on the account page subwindow or on login.
+     */
+    public void updateAccountPage() {
+        db.Connect();
+        List<List> list = db.dbQuery("SELECT FirstName, LastName, DOB FROM users WHERE userid = " + currentuserid);
+        namelabel.setText((String) list.get(0).get(0) + " " + (String) list.get(0).get(1));
+        doblabel.setText(((Date) list.get(0).get(2)).toString());
+    }
+
+    /*This method changes the UI back to the tabbed view*/
+    @FXML
+    private void returntotabview() {
+        tabpane.setVisible(true);
+        accountpane.setVisible(false);
+        accountlink.setVisible(true);
+        logoutlink.setVisible(true);
+    }
+
+    /*End Account Page Methods*/
+    
     //Returns the current instance of DoctorWindowController
     //Useful to pass information back and forth between windows
     public DoctorWindowController getDoctorWindowController() {
         return this;
     }
-    /*End Prescription tab methods*/
+
+    /*
+     * Kent's method
+     * This method is intended to refresh all information when one user logs off
+     * and another user logs in.
+     * 
+     * This late in the semester, it probably won't see much use.
+     */
+    public void onLogin() {
+        updatePrescriptionTab();
+    }
 
     @Override
     public void setScreenParent(ScreenController screenParent) {

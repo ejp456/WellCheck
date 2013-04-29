@@ -2,6 +2,7 @@
 //Handles button clicks to login
 package wellcheck;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -23,6 +24,11 @@ import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import static wellcheck.DoctorWindowController.db;
 
 /**
@@ -33,14 +39,16 @@ public class SampleController implements Initializable, ControlledScreen {
     
     @FXML private TextField username;
     @FXML private PasswordField password;
-    private Database db = new Database();
+    //private Database db = new Database();
     public static String patient = "";
     ScreenController myController;
-    private ObservableList<PatientTable> patientList;
+    
+    private DoctorWindowController dwcontroller;
    
     
     @FXML protected void handleSubmitButtonAction(ActionEvent event) {
         db.Connect();
+        setDWController();
         String user = username.getText().toString();
         String pass = password.getText().toString();
         boolean test = db.userExist(user);
@@ -49,10 +57,10 @@ public class SampleController implements Initializable, ControlledScreen {
         System.out.println("User Exists");
         test = db.checkPassword(user, pass);
             if(test){
+                
                 wellcheck.DoctorWindowController.userType(usertype);
                 if(usertype.equalsIgnoreCase("Nurse")){
                     System.out.println("Password is correct");
-                    myController.setScreen(WellCheck.screenID2);
                     db.patientTable();
                 }
                 else if(usertype.equalsIgnoreCase("Patient")){
@@ -60,15 +68,19 @@ public class SampleController implements Initializable, ControlledScreen {
                      //patient = (String) ((ArrayList) plist.get(0)).get(0) + " " + (String) ((ArrayList) plist.get(0)).get(1);
                      db.patientScreenTable((String) (plist.get(0)).get(0), (String) (plist.get(0)).get(1));
                      wellcheck.DoctorWindowController.patientWindow();
-                     myController.setScreen(WellCheck.screenID2);
                 }else{
                 //if username and password is correct program moves to main screen
                     System.out.println("Password is correct");
-                    myController.setScreen(WellCheck.screenID2);
                     db.patientTable();
                     }
-                
-                }
+                //Kent's additions
+                //Sets data in the DWC class to appropriate values based on login
+                //Needed for things like storing what the current user is.
+                dwcontroller.currentuserid = (Integer) ((List) db.dbQuery("SELECT userid FROM users WHERE username = '" + user + "' AND password = '" + pass + "'").get(0)).get(0);
+                dwcontroller.currentusertype = usertype;
+                dwcontroller.onLogin();
+                myController.setScreen("DoctorWindow");
+            }
         }
         username.clear();
         password.clear();
@@ -86,10 +98,30 @@ public class SampleController implements Initializable, ControlledScreen {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    }
     
     public void setScreenParent(ScreenController screenParent){
         myController = screenParent;
+    }
+    
+    /* Kent's method addition
+     * This method creates the instance of the DoctorWindowController class
+     * that is used by the rest of the program. It's done here instead of
+     * WellCheck.java, where it was done previously, so that I can have the
+     * instance handy to pass data to, without having to resort to public
+     * static date members.
+     */
+    public void setDWController() {
+        if(dwcontroller == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                Node n = (Node) loader.load(getClass().getResource("DoctorWindow.fxml").openStream());
+                dwcontroller = (DoctorWindowController) loader.getController();
+                myController.addScreen("DoctorWindow", n);
+                dwcontroller.setScreenParent(myController);
+            } catch (IOException ex) {
+                Logger.getLogger(SampleController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

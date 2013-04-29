@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 
 /**
@@ -34,6 +35,8 @@ public class AddPrescriptionWindowController implements Initializable {
     private TextField prescription, treatment, dateyear, dateday, datemonth, length;
     @FXML
     private Label errorlabel, datelabel;
+    @FXML
+    private TitledPane addprescriptiontitle;
     @FXML
     private ComboBox doctorbox;
     private DoctorWindowController parentcontroller;
@@ -222,6 +225,7 @@ public class AddPrescriptionWindowController implements Initializable {
         
         //If add flag, clear all the text fields and remove any selection in the doctor combobox
         if (addflag) {
+            addprescriptiontitle.setText("Add Prescription");
             prescription.clear();
             treatment.clear();
             dateyear.clear();
@@ -232,6 +236,7 @@ public class AddPrescriptionWindowController implements Initializable {
         }
         //If edit flag, fill fields with information from the table selection from the Main Window
         if (editflag) {
+            addprescriptiontitle.setText("Edit Prescription");
             prescription.setText(selectedprescription.getPrescription());
             treatment.setText(selectedprescription.getTreatment());
             String[] date = selectedprescription.getIssuedate().split("-");
@@ -243,6 +248,7 @@ public class AddPrescriptionWindowController implements Initializable {
         }
         //If remove flag, hide all UI elements except a confirmation message
         if (removeflag) {
+            addprescriptiontitle.setText("Remove Prescription");
             prescription.setVisible(false);
             treatment.setVisible(false);
             dateyear.setVisible(false);
