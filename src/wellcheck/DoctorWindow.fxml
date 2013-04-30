@@ -37,10 +37,10 @@
                                         </FXCollections>
                                     </items>
                                 </TableView>
-                                <Button fx:id="removePatient" layoutX="417.0" layoutY="284.0" mnemonicParsing="false" onAction="#removePatient" prefWidth="183.0" text="Remove Patient" />
-                                <Button fx:id="addDep" layoutX="417.0" layoutY="254.0" mnemonicParsing="false" onAction="#addDependant" prefWidth="183.0" text="Add Dependant to Patient" />
-                                <Button fx:id="editPatient" layoutX="417.0" layoutY="226.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="183.0" text="Edit Patient Information" />
-                                <Button fx:id="addPatient" layoutX="417.0" layoutY="197.0" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="183.0" text="Add Patient" />
+                                <Button fx:id="removePatient" layoutX="417.0" layoutY="284.0" mnemonicParsing="false" onAction="#removePatient" prefWidth="155.0" text="Remove Patient" />
+                                <Button fx:id="addDep" layoutX="417.0" layoutY="254.0" mnemonicParsing="false" onAction="#addDependant" prefWidth="155.0" text="Add Dependant to Patient" />
+                                <Button fx:id="editPatient" layoutX="417.0" layoutY="226.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="155.0" text="Edit Patient Information" />
+                                <Button fx:id="addPatient" layoutX="417.0" layoutY="197.0" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="155.0" text="Add Patient" />
                             </children>
                         </AnchorPane>
                     </content>
