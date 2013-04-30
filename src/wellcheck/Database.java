@@ -247,28 +247,42 @@ public String getUserName(String fName, String lName){
         return null;
 	}
 }
-    public void initializePatient(String firstName, String lastName, String dateOfBirth, String address1,
-            String address2, String city, String state, String zip, String phoneNumber,
-            String insuranceProvider, String memberId, String groupNumber, String assignedDoctor, String userId) {
-        String empty = "empty";
-        try {
-            statement = (PreparedStatement) con.prepareStatement(
-                    "INSERT INTO `1_0362c2e_3`.`Patient` (`userid`, `Address1`, `Address2`, `City`, `State`, "
-                    + "`ZipCode`, `PhoneNumber`, `InsuranceProvider`, `memberid`, `groupid`, `DependantTo`, `Doctor`) "
-                    + "VALUES ('" + userId + "', '" + address1 + "', '" + address2 + "', '" + city + "', '" + state + "', '" + zip + "', '" + phoneNumber
-                    + "', '" + insuranceProvider + "', '" + memberId + "', '" + groupNumber + "', '0', '" + assignedDoctor + "');");
-            statement.execute();
-            statement = (PreparedStatement) con.prepareStatement("INSERT INTO `1_0362c2e_3`.`users`(`userid` ,`username` ,`password` ,`usertype` ,"
-                    + "`FirstName` ,`LastName` ,`DOB` ,`SecretQuestion` ,`SecretAnswer`)"
-                    + "VALUES ('" + userId + "', '" + empty + "', '" + empty + "', " + " 'Patient', " + " '" + firstName + "', '" + lastName + "', '" + dateOfBirth
-                    + "', '" + empty + "', '" + empty + "');");
-
-            statement.execute();
-        } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(Database.class.getName());
-            lgr.log(Level.SEVERE, ex.getMessage(), ex);
-        }
+public void initializePatient(String firstName, String lastName, String dateOfBirth, String address1,
+        String address2, String city, String state, String zip, String phoneNumber,
+        String insuranceProvider, String memberId, String groupNumber, String assignedDoctor, String userId) {
+    String empty = "empty";
+    try {
+    statement = (PreparedStatement) con.prepareStatement("SELECT userid FROM users");
+    rs = statement.executeQuery();
+    while(rs.next()){
+        userId = rs.getString(1);
     }
+    if(userId.equals(" ")){
+        userId = "1";
+    }else{
+    int temp = Integer.parseInt(userId);
+    temp++;
+    userId = Integer.toString(temp);
+    }
+    statement = (PreparedStatement) con.prepareStatement(
+            "INSERT INTO `1_0362c2e_3`.`Patient` (`userid`, `Address1`, `Address2`, `City`, `State`, "
+            + "`ZipCode`, `PhoneNumber`, `InsuranceProvider`, `memberid`, `groupid`, `DependantTo`, `Doctor`) "
+            + "VALUES ('" + userId + "', '" + address1 + "', '" + address2 + "', '" + city + "', '" + state + "', '" + zip + "', '" + phoneNumber
+            + "', '" + insuranceProvider + "', '" + memberId + "', '" + groupNumber + "', '0', '" + assignedDoctor + "');");
+    statement.execute();
+    statement = (PreparedStatement) con.prepareStatement("INSERT INTO `1_0362c2e_3`.`users`(`userid` ,`username` ,`password` ,`usertype` ,"
++"`FirstName` ,`LastName` ,`DOB` ,`SecretQuestion` ,`SecretAnswer`)"
++"VALUES ('" + userId + "', '" + empty + "', '" + empty + "', " + " 'Patient', " + " '" + firstName + "', '" + lastName + "', '" + dateOfBirth
+            + "', '" + empty + "', '" + empty + "');");
+    
+    statement.execute();
+
+    
+    } catch (SQLException ex) {
+        Logger lgr = Logger.getLogger(Database.class.getName());
+        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+    }
+}
 
     public boolean userExist(String string1) {
         try {

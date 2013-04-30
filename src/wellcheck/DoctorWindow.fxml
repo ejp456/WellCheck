@@ -36,47 +36,47 @@
                          
                                         </FXCollections>
                                     </items>
-                </TableView>
-                <Button fx:id="removePatient" layoutX="389.0" layoutY="287.0" mnemonicParsing="false" onAction="#removePatient" prefWidth="183.0" text="Remove Patient" />
-                <Button fx:id="addDep" layoutX="389.0" layoutY="257.0" mnemonicParsing="false" onAction="#addDependant" prefWidth="183.0" text="Add Dependant to Patient" />
-                <Button fx:id="editPatient" layoutX="389.0" layoutY="229.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="183.0" text="Edit Patient Information" />
-                <Button fx:id="addPatient" layoutX="389.0" layoutY="200.0" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="183.0" text="Add Patient" />
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab fx:id="datatab" text="Data">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="286.0">
-              <children>
-                <TableView layoutY="26.0" prefHeight="298.0" prefWidth="600.0">
-                  <columns>
-                    <TableColumn prefWidth="75.0" text="BP">
-                      <cellValueFactory>
-                        <PropertyValueFactory property="Blood" />
-                      </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn prefWidth="75.0" text="Weight">
-                      <cellValueFactory>
-                        <PropertyValueFactory property="weight" />
-                      </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn prefWidth="75.0" text="Sugar">
-                      <cellValueFactory>
-                        <PropertyValueFactory property="sugar" />
-                      </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn prefWidth="105.0" text="Date">
-                      <cellValueFactory>
-                        <PropertyValueFactory property="date" />
-                      </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn prefWidth="275.0" text="Comments">
-                      <cellValueFactory>
-                        <PropertyValueFactory property="comments" />
-                      </cellValueFactory>
-                    </TableColumn>
-                  </columns>
+                                </TableView>
+                                <Button fx:id="removePatient" layoutX="417.0" layoutY="284.0" mnemonicParsing="false" onAction="#removePatient" prefWidth="155.0" text="Remove Patient" />
+                                <Button fx:id="addDep" layoutX="417.0" layoutY="254.0" mnemonicParsing="false" onAction="#addDependant" prefWidth="155.0" text="Add Dependant to Patient" />
+                                <Button fx:id="editPatient" layoutX="417.0" layoutY="226.0" mnemonicParsing="false" onAction="#editPatient" prefWidth="155.0" text="Edit Patient Information" />
+                                <Button fx:id="addPatient" layoutX="417.0" layoutY="197.0" mnemonicParsing="false" onAction="#addPatientButton" prefWidth="155.0" text="Add Patient" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab fx:id="datatab" text="Data">
+                    <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="286.0">
+                            <children>
+                                <TableView layoutY="26.0" prefHeight="298.0" prefWidth="600.0">
+                                    <columns>
+                                        <TableColumn prefWidth="75.0" text="BP">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="Blood" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="75.0" text="Weight">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="weight" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="75.0" text="Sugar">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="sugar" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="105.0" text="Date">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="date" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="275.0" text="Comments">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="comments" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
                                     <items>
                                         <FXCollections fx:id ="dataList" fx:factory="observableArrayList">
                                         </FXCollections>
