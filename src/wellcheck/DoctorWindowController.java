@@ -107,15 +107,20 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     }
 
     @FXML
-    protected void removePatient(ActionEvent event) {
+    protected void removePatient(ActionEvent event) throws Exception {
         db.Connect();
+        try{
         PatientTable patient = (PatientTable) patientTable.getSelectionModel().getSelectedItem();
         String name[] = patient.getPatient().split(" ");
         if (name.length >= 2) {
             patientList.remove(patient);
             comboList.remove(name[0] + " " + name[1]);
             db.deleteUser(name[0], name[1]);
+            }
+        }catch(NullPointerException e){
+           
         }
+        
     }
 
     @FXML
