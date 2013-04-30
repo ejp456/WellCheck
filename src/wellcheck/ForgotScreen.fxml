@@ -11,9 +11,10 @@
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="212.0" prefWidth="282.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.ForgotScreenController">
   <children>
     <Button fx:id="getPass" layoutX="21.0" layoutY="125.0" mnemonicParsing="false" onAction="#forgotPassword" text="Get Password?" />
-    <Button fx:id="getUser" layoutX="150.0" layoutY="125.0" mnemonicParsing="false" text="Get Username" onAction="#forgotUserName"/>
+    <Button fx:id="getUser" layoutX="150.0" layoutY="125.0" mnemonicParsing="false" onAction="#forgotUserName" text="Get Username" />
     <TextField id="enterEmail" fx:id="enterFirstName" layoutX="21.0" layoutY="95.0" prefWidth="111.0" promptText="First Name" />
     <Label fx:id="secretQuestion" contentDisplay="CENTER" layoutX="107.0" layoutY="72.0" />
     <TextField id="enterEmail" fx:id="enterLastName" layoutX="150.0" layoutY="95.0" prefWidth="111.0" promptText="Last Name" />
+    <Button fx:id="cancelbutton" layoutX="113.0" layoutY="164.0" mnemonicParsing="false" onAction="#close" text="Cancel" />
   </children>
 </AnchorPane>

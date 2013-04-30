@@ -40,9 +40,8 @@ public class AccountSubwindowController implements Initializable {
     @FXML
     private TextArea challengequestionfield;
     private boolean editflag, passwordflag, questionflag;
-    private int currentuser;
     private DoctorWindowController parentcontroller;
-    private User user;
+    private User currentuser;
 
     /*
      * This method allows editing of a user's first name, last name, and date of birth.
@@ -80,10 +79,10 @@ public class AccountSubwindowController implements Initializable {
             accountconfirmlabel.setVisible(true);
         } //Else save the information to the database and display a confirmation.
         else {
-            user.setFirstname(fnamefield.getText());
-            user.setLastname(lnamefield.getText());
-            user.setDateofbirth(dateyfield.getText() + "-" + datemfield.getText() + "-" + datedfield.getText());
-            User.updateRow(user);
+            currentuser.setFirstname(fnamefield.getText());
+            currentuser.setLastname(lnamefield.getText());
+            currentuser.setDateofbirth(dateyfield.getText() + "-" + datemfield.getText() + "-" + datedfield.getText());
+            User.updateRow(currentuser);
 
             informationpane.setVisible(false);
             accountconfirmlabel.setText("Information saved.");
@@ -108,9 +107,9 @@ public class AccountSubwindowController implements Initializable {
             accountconfirmlabel.setVisible(true);
         } //Else, save the information to the database and display a confirmation message.
         else {
-            user.setSecretquestion(question);
-            user.setSecretanswer(answer);
-            User.updateRow(user);
+            currentuser.setSecretquestion(question);
+            currentuser.setSecretanswer(answer);
+            User.updateRow(currentuser);
 
             questionpane.setVisible(false);
             accountconfirmlabel.setText("Challenge question and answer saved.");
@@ -137,7 +136,7 @@ public class AccountSubwindowController implements Initializable {
             accountconfirmlabel.setText("Please enter all fields.");
             accountconfirmlabel.setVisible(true);
         } //else if the old password does not match the current password, display an error message
-        else if (!oldpassword.equals(user.getPassword())) {
+        else if (!oldpassword.equals(currentuser.getPassword())) {
             oldpasswordfield.clear();
             newpasswordfield.clear();
             confirmpasswordfield.clear();
@@ -155,8 +154,8 @@ public class AccountSubwindowController implements Initializable {
             oldpasswordfield.clear();
             newpasswordfield.clear();
             confirmpasswordfield.clear();
-            user.setPassword(newpassword);
-            User.updateRow(user);
+            currentuser.setPassword(newpassword);
+            User.updateRow(currentuser);
 
             passwordpane.setVisible(false);
             accountconfirmlabel.setText("Password changed.");
@@ -182,13 +181,12 @@ public class AccountSubwindowController implements Initializable {
      * Primarily, it allows passing of data between the DoctorWindowController
      * and this window.
      */
-    public void setData(DoctorWindowController d, boolean s, boolean c, boolean q, int cuser) {
+    public void setData(DoctorWindowController d, boolean s, boolean c, boolean q, User cuser) {
         parentcontroller = d;
         editflag = s;
         questionflag = q;
         passwordflag = c;
         currentuser = cuser;
-        user = User.getRow(currentuser);
 
         //Displays or hides anchor panes based on button choice on Account page
         informationpane.setVisible(editflag);
@@ -197,14 +195,20 @@ public class AccountSubwindowController implements Initializable {
         accountconfirmlabel.setVisible(false);
 
         //Preloads information into relevant fields.
-        fnamefield.setText(user.getFirstname());
-        lnamefield.setText(user.getLastname());
-        String[] datestring = user.getDateofbirth().split("-");
+        fnamefield.setText(currentuser.getFirstname());
+        lnamefield.setText(currentuser.getLastname());
+        String[] datestring = currentuser.getDateofbirth().split("-");
         dateyfield.setText(datestring[0]);
         datemfield.setText(datestring[1]);
         datedfield.setText(datestring[2]);
-        challengequestionfield.setText(user.getSecretquestion());
-        challengeanswerfield.setText(user.getSecretanswer());
-
+        challengequestionfield.setText(currentuser.getSecretquestion());
+        challengeanswerfield.setText(currentuser.getSecretanswer());
+        
+        if(editflag)
+            accounttitle.setText("Edit Information");
+        if(questionflag)
+            accounttitle.setText("Change Challenge Question");
+        if(passwordflag)
+            accounttitle.setText("Change Password");
     }
 }

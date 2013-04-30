@@ -39,6 +39,7 @@ public class SampleController implements Initializable, ControlledScreen {
     
     @FXML private TextField username;
     @FXML private PasswordField password;
+    @FXML private Label loginerror;
     //private Database db = new Database();
     public static String patient = "";
     ScreenController myController;
@@ -49,17 +50,16 @@ public class SampleController implements Initializable, ControlledScreen {
     @FXML protected void handleSubmitButtonAction(ActionEvent event) {
         db.Connect();
         setDWController();
+        loginerror.setVisible(false);
         String user = username.getText().toString();
         String pass = password.getText().toString();
         boolean test = db.userExist(user);
         String usertype = db.getUserType(user, pass);
-        System.out.println(usertype);
         if(test){
-        System.out.println("User Exists");
         test = db.checkPassword(user, pass);
             if(test){
                 
-                wellcheck.DoctorWindowController.userType(usertype);
+                //wellcheck.DoctorWindowController.userType(usertype);
                 if(usertype.equalsIgnoreCase("Nurse")){
                     System.out.println("Password is correct");
                     db.patientTable();
@@ -80,10 +80,19 @@ public class SampleController implements Initializable, ControlledScreen {
                 //Sets data in the DWC class to appropriate values based on login
                 //Needed for things like storing what the current user is.
                 dwcontroller.currentuserid = (Integer) ((List) db.dbQuery("SELECT userid FROM users WHERE username = '" + user + "' AND password = '" + pass + "'").get(0)).get(0);
-                dwcontroller.currentusertype = usertype;
                 dwcontroller.onLogin();
                 myController.setScreen("DoctorWindow");
             }
+            else
+            {
+                loginerror.setText("Password incorrect.");
+                loginerror.setVisible(true);
+            }
+        }
+        else
+        {
+            loginerror.setText("Username does not exist.");
+            loginerror.setVisible(true);
         }
         username.clear();
         password.clear();
@@ -97,6 +106,12 @@ public class SampleController implements Initializable, ControlledScreen {
        
        stage.setScene(scene);
        stage.show();
+    }
+    
+    @FXML protected void close(ActionEvent event) throws Exception {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
     
     @Override

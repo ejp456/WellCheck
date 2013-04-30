@@ -18,7 +18,7 @@ import javafx.fxml.FXML;
 public class LineChartController implements Initializable {
     
     @FXML private LineChart lineChart;
-    private Database db = new Database();
+    private Database db = DoctorWindowController.db;
     private String[] array;
     
     private void setArray() {

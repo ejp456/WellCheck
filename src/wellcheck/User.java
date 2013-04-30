@@ -68,7 +68,7 @@ public class User {
     //This method instantiates an object of the User class by querying the
     //database
     static User getRow(int userid) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         User returnuser = new User();
         
@@ -94,7 +94,7 @@ public class User {
     //This method inserts a user object into the database
     //To successfully insert, be sure to set userid = 0
     static void insertRow(User insertuser) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         
         //Checks to see if the object is already in the database
@@ -137,7 +137,7 @@ public class User {
     //This method deletes a user from the database by userid
     static void deleteRow(User deleteuser)
     {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         String qstring = "DELETE FROM users WHERE userid = " + deleteuser.getUserid();
         db.updateDB(qstring);        
@@ -146,7 +146,7 @@ public class User {
     
     //This method modifies an existing database entry
     static void updateRow(User updateuser) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         
         String qstring = "UPDATE users SET "

@@ -73,7 +73,7 @@ public class EditPatientInformationWindows implements Initializable {
     String memberID;
     String groupNumber;
     String assignedDoctor;
-    Database db = new Database();
+    Database db = DoctorWindowController.db;
     
     
 
@@ -380,8 +380,7 @@ public class EditPatientInformationWindows implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       db = new Database();
-        db.Connect();
+       db.Connect();
         
 
 

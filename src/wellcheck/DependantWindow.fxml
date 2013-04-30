@@ -23,8 +23,8 @@
         <Button fx:id="cancel1" layoutX="130.0" layoutY="124.0" mnemonicParsing="false" onAction="#close" text="Cancel" />
         <Button fx:id="confirm2" layoutX="14.0" layoutY="124.0" mnemonicParsing="false" onAction="#confirm2" text="Confirm" />
         <Button fx:id="cancel2" layoutX="130.0" layoutY="124.0" mnemonicParsing="false" onAction="#cancel2" text="Cancel" />
-        <ComboBox fx:id="dependee" layoutX="14.0" layoutY="39.0" prefHeight="21.0" prefWidth="172.0" promptText="Select Patient" />
-        <ComboBox fx:id="depender" layoutX="14.0" layoutY="90.0" prefHeight="21.0" prefWidth="172.0" promptText="Select Patient" />
+        <ComboBox id="dependee" fx:id="depender" layoutX="14.0" layoutY="39.0" prefHeight="21.0" prefWidth="172.0" promptText="Select Patient" />
+        <ComboBox id="depender" fx:id="dependee" layoutX="14.0" layoutY="90.0" prefHeight="21.0" prefWidth="172.0" promptText="Select Patient" />
         <Button fx:id="donebutton" layoutX="78.0" layoutY="124.0" mnemonicParsing="false" onAction="#close" text="Done" />
       </children>
     </AnchorPane>

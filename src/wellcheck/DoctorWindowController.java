@@ -64,7 +64,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
     @FXML private Button addprescriptionbutton, editprescriptionbutton, removeprescriptionbutton;
     int selectedpatientid;
     int currentuserid;
-    String currentusertype;
+    User currentuser;
 
     @FXML
     protected void addPatientButton(ActionEvent event) throws Exception {
@@ -152,8 +152,13 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         db.closeConnection();
     }
     
-    public static void userType(String user){
-        typeLabel.setText("Logged in as: "+user);
+    public void typeLabelSet(){
+        if(currentuser.getUsertype().equals("Doctor"))
+            typeLabel.setText("You are logged in as Dr. " + currentuser.getLastname());
+        if(currentuser.getUsertype().equals("Nurse"))
+            typeLabel.setText("You are logged in as Nurse " + currentuser.getLastname());
+        if(currentuser.getUsertype().equals("Patient"))
+            typeLabel.setText("You are logged in as " + currentuser.getFirstname() + " " + currentuser.getLastname());
     }
     public static void addPatient(String p,String d){
         patientList.add(new PatientTable(p,d));
@@ -187,7 +192,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         db.Connect();
         //Queries the database for patient names
         List<List> rlist;
-        if (currentusertype.equals("Doctor") || currentusertype.equals("Nurse")) {
+        if (currentuser.getUsertype().equals("Doctor") || currentuser.getUsertype().equals("Nurse")) {
             rlist = db.dbQuery("Select FirstName, LastName FROM users WHERE usertype = 'Patient'");
         } else {
             rlist = db.dbQuery("SELECT FirstName, LastName FROM users WHERE userid = " + currentuserid + " UNION SELECT FirstName, LastName FROM users, Patient WHERE users.userid = Patient.userid AND Patient.DependantTo = " + currentuserid);
@@ -205,6 +210,20 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         prescriptioncombobox.getItems().clear();
         prescriptioncombobox.getItems().addAll(patientname);
         prescriptionerror.setVisible(false);
+        if(currentuser.getUsertype().equals("Patient"))
+        {
+            addprescriptionbutton.setVisible(false);
+            editprescriptionbutton.setVisible(false);
+            removeprescriptionbutton.setVisible(false);
+        }
+        else
+        {
+            addprescriptionbutton.setVisible(true);
+            editprescriptionbutton.setVisible(true);
+            removeprescriptionbutton.setVisible(true);
+        }
+               
+        
         addprescriptionbutton.setDisable(true);
         editprescriptionbutton.setDisable(true);
         removeprescriptionbutton.setDisable(true);
@@ -265,7 +284,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
             prescriptionerror.setVisible(false);
         }
 
-        if (!currentusertype.equals("Patient")) {
+        if (!currentuser.getUsertype().equals("Patient")) {
             if (empty) {
                 addprescriptionbutton.setDisable(false);
                 editprescriptionbutton.setDisable(true);
@@ -441,7 +460,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         questionflag = false;
 
         //Passing all the data to the AddPrescriptionWindowController
-        controller.setData(getDoctorWindowController(), editflag, passwordflag, questionflag, currentuserid);
+        controller.setData(getDoctorWindowController(), editflag, passwordflag, questionflag, currentuser);
 
         stage.show();
     }
@@ -475,7 +494,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         questionflag = false;
 
         //Passing all the data to the AddPrescriptionWindowController
-        controller.setData(getDoctorWindowController(), editflag, passwordflag, questionflag, currentuserid);
+        controller.setData(getDoctorWindowController(), editflag, passwordflag, questionflag, currentuser);
 
         stage.show();
     }
@@ -509,7 +528,7 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
         questionflag = true;
 
         //Passing all the data to the AddPrescriptionWindowController
-        controller.setData(getDoctorWindowController(), editflag, passwordflag, questionflag, currentuserid);
+        controller.setData(getDoctorWindowController(), editflag, passwordflag, questionflag, currentuser);
 
         stage.show();
     }
@@ -519,10 +538,8 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
      * response to action taken on the account page subwindow or on login.
      */
     public void updateAccountPage() {
-        db.Connect();
-        List<List> list = db.dbQuery("SELECT FirstName, LastName, DOB FROM users WHERE userid = " + currentuserid);
-        namelabel.setText((String) list.get(0).get(0) + " " + (String) list.get(0).get(1));
-        doblabel.setText(((Date) list.get(0).get(2)).toString());
+        namelabel.setText(currentuser.getFirstname() + " " + currentuser.getLastname());
+        doblabel.setText(currentuser.getDateofbirth());
     }
 
     /*This method changes the UI back to the tabbed view*/
@@ -550,7 +567,9 @@ public class DoctorWindowController implements Initializable, ControlledScreen {
      * This late in the semester, it probably won't see much use.
      */
     public void onLogin() {
+        currentuser = User.getRow(currentuserid);
         updatePrescriptionTab();
+        typeLabelSet();
     }
 
     @Override

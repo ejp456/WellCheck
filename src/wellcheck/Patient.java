@@ -96,7 +96,7 @@ public class Patient extends User {
     //including prescriptions and health records associated with the patient.
     //Extremely slow performance
     static Patient getRow(int userid) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         Patient returnpatient = new Patient();
 
@@ -155,7 +155,7 @@ public class Patient extends User {
     }
 
     static void insertRow(Patient insertpatient) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
 
         //Checks to see if the object is already in the database
@@ -223,7 +223,7 @@ public class Patient extends User {
     static void updateRow(Patient p) {
         User.updateRow(p);
 
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
 
         String qstring = "UPDATE Patient SET "
@@ -247,7 +247,7 @@ public class Patient extends User {
     //users, Patient, Records, and Prescriptions tables
     static void deleteRow(Patient p) {
 
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
 
         String qstring = "DELETE FROM users WHERE userid = " + p.getUserid();

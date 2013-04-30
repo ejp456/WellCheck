@@ -63,7 +63,7 @@ public class Prescription {
 
     //Instantiates an object of the Prescription class from data in the database
     static Prescription getPrescriptionRow(int id) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         Prescription returnprescription = new Prescription();
 
@@ -87,7 +87,7 @@ public class Prescription {
     }
 
     static void insertPrescriptionRow(Prescription p) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
 
         //Checks to see if the object is already in the database
@@ -120,7 +120,7 @@ public class Prescription {
 
     //This method deletes a prescription from the database by id
     static void deletePrescriptionRow(Prescription p) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         String qstring = "DELETE FROM Prescriptions WHERE id = " + p.getId();
         db.updateDB(qstring);
@@ -129,7 +129,7 @@ public class Prescription {
 
     //This method modifies an existing database entry
     static void updatePrescriptionRow(Prescription p) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         String qstring = "UPDATE Prescriptions SET "
                 + "Patient = '" + p.getPatientid() + "', "

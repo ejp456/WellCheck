@@ -56,7 +56,7 @@ public class AddPatientWindowController implements Initializable {
     private String assignedDoctorFirst;
     private String assignedDoctorLast;
     private String userId;
-    private Database db = new Database();
+    private Database db = DoctorWindowController.db;
     
     
     

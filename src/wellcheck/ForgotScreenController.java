@@ -13,10 +13,12 @@ import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 
 /**
@@ -27,6 +29,7 @@ import javafx.scene.paint.Color;
 public class ForgotScreenController implements Initializable {
     @FXML private Button getPass;
     @FXML private Button getUser;
+    @FXML private Button cancelbutton;
     @FXML private TextField enterFirstName;
     @FXML private TextField enterLastName;
     @FXML private Label secretQuestion;
@@ -36,7 +39,7 @@ public class ForgotScreenController implements Initializable {
     String lName;
     String fName;
     String secret;
-    Database db = new Database();
+    Database db = DoctorWindowController.db;
     
     
     
@@ -47,6 +50,7 @@ public class ForgotScreenController implements Initializable {
             secretQuestion.setTextFill(Color.RED);
             enterFirstName.setVisible(false);
             getPass.setVisible(false);
+            cancelbutton.setText("Done");
         }else{
             secretQuestion.setText("Wrong Answer");
             secretQuestion.setTextFill(Color.RED);
@@ -81,6 +85,7 @@ public class ForgotScreenController implements Initializable {
                    secretQuestion.setTextFill(Color.RED);
                    enterLastName.setVisible(false);
                    getUser.setVisible(false);
+                   cancelbutton.setText("Done");
                }else{
                    secretQuestion.setText("Wrong Answer");
                    secretQuestion.setTextFill(Color.RED);
@@ -106,6 +111,14 @@ public class ForgotScreenController implements Initializable {
            }
            
     }
+    
+    @FXML protected void close(ActionEvent event)
+    {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

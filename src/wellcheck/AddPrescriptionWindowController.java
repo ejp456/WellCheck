@@ -180,7 +180,7 @@ public class AddPrescriptionWindowController implements Initializable {
     //Primarily fills the prescriber combobox with names from the database
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         //Querying the database for doctors' last names
         List<List> rlist = db.dbQuery("Select LastName, userid FROM users WHERE usertype = 'Doctor'");

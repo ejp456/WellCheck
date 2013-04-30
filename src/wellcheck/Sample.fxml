@@ -7,16 +7,18 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:controller="wellcheck.SampleController" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="wellcheck.SampleController">
   <children>
-    <Label fx:id="label"  alignment="CENTER" contentDisplay="CENTER" layoutX="149.0" layoutY="64.0" prefWidth="302.0" text="Well-Check Automation">
+    <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" layoutX="149.0" layoutY="64.0" prefWidth="302.0" text="Well-Check Automation">
       <font>
         <Font name="Arial" size="28.0" />
       </font>
     </Label>
     <TextField fx:id="username" layoutX="200.0" layoutY="200.0" prefWidth="200.0" promptText="Username" />
     <PasswordField fx:id="password" layoutX="200.0" layoutY="222.0" prefWidth="200.0" promptText="Password" />
-    <Hyperlink layoutX="221.0" layoutY="273.0" text="Forgot Username/Password?" textFill="#0029ff" underline="true" onAction ="#forgotButton"/>
-    <Button layoutX="241.0" layoutY="244.0" mnemonicParsing="false" prefWidth="118.0" text="Login" onAction="#handleSubmitButtonAction"/>
+    <Button layoutX="241.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleSubmitButtonAction" prefWidth="118.0" text="Login" />
+    <Hyperlink layoutX="221.0" layoutY="273.0" onAction="#forgotButton" text="Forgot Username/Password?" textFill="#0029ff" underline="true" />
+    <Hyperlink layoutX="288.0" layoutY="295.0" onAction="#close" text="Exit" textFill="#1400ff" underline="true" />
+    <Label fx:id="loginerror" alignment="CENTER" contentDisplay="CENTER" layoutX="221.0" layoutY="178.0" textAlignment="CENTER" />
   </children>
 </AnchorPane>

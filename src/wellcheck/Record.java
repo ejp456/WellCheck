@@ -52,7 +52,7 @@ public class Record {
     //This method instantiates an object of the Record class by querying the
     //database.
     static Record getRecordRow(int id) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         Record returnrecord = new Record();
 
@@ -75,7 +75,7 @@ public class Record {
     //This method inserts an Record object into the database.
     //To successfully insert, be sure to set id = 0
     static void insertRecordRow(Record r) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
 
         //Checks to see if the object is already in the database
@@ -108,7 +108,7 @@ public class Record {
 
     //This method modifies an existing entry in the database
     static void updateRecordRow(Record r) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         String qstring = "UPDATE Records SET "
                 + "PatientId = '" + r.getPatientid() + "', "
@@ -124,7 +124,7 @@ public class Record {
 
     //This method deletes a record from the database by id
     static void deleteRecordRow(Record r) {
-        Database db = new Database();
+        Database db = DoctorWindowController.db;
         db.Connect();
         String qstring = "DELETE FROM Records WHERE id = " + r.getId();
         db.updateDB(qstring);

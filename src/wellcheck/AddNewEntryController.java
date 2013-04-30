@@ -30,7 +30,7 @@ import javafx.stage.Stage;
  */
 public class AddNewEntryController implements Initializable {
     ComboBox patientBox;
-    Database db = new Database();
+    Database db = DoctorWindowController.db;
     @FXML private TextField enterBloodPressure;
     @FXML private TextField enterWeight;
     @FXML private TextField enterSugar;

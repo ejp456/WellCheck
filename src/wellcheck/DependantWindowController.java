@@ -101,7 +101,7 @@ public class DependantWindowController implements Initializable {
         String[] provider = ((String) dependee.getValue()).split("\\s+");
         String[] dependant = ((String) depender.getValue()).split("\\s+");
 
-        db = new Database();
+        db = DoctorWindowController.db;
         db.Connect();
 
 
@@ -124,7 +124,7 @@ public class DependantWindowController implements Initializable {
         }
 
         //Confirmation message
-        confirmtext.setText("" + depender.getValue() + " set as a dependant to "
+        confirmtext.setText(depender.getValue() + " set as a dependant to "
                 + dependee.getValue() + ".");
         confirmtext.setVisible(true);
         donebutton.setVisible(true);
@@ -153,7 +153,7 @@ public class DependantWindowController implements Initializable {
     //Loads the two comboboxes with the names of patients
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        db = new Database();
+        db = DoctorWindowController.db;
         db.Connect();
 
         List<List> rlist;
