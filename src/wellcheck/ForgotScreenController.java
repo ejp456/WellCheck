@@ -41,6 +41,7 @@ public class ForgotScreenController implements Initializable {
     
     
     @FXML protected void forgotPassword(ActionEvent e){
+    try{
     if(getPass.getText().equalsIgnoreCase("Answer")){
         if(secretAnswer.equalsIgnoreCase(enterFirstName.getText())){
             secretQuestion.setText("Password: "+password);
@@ -70,7 +71,11 @@ public class ForgotScreenController implements Initializable {
         enterLastName.setVisible(false);
         getUser.setVisible(false);
         }
-    }
+    
+      }
+     }catch(NullPointerException ex){
+            secretQuestion.setText("All fields must be entered");
+        }
     
     
     }
