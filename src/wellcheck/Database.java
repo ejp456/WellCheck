@@ -36,9 +36,9 @@ public class Database {
         rsmd = null;
         statement = null;
         
-        url = "jdbc:mysql://205.178.146.105/1_0362c2e_3";
-        user = "1_0362c2e_3";
-        password = "3ggM4KkyFD";
+        url = ;
+        user = ;
+        password = ;
 	}
 	public void Connect(){
         try {
